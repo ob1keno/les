@@ -1,720 +1,738 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>24 часа тишины в лесу — Перезагрузка нервной системы</title>
-    <style>
-        :root {
-            --bg-deep: #0F1A14;
-            --bg-card: rgba(15, 26, 20, 0.7);
-            --text-warm: #F5F0EB;
-            --text-muted: #C4BBAF;
-            --accent: #D49A3E;
-            --accent-hover: #E8B54C;
-            --line: rgba(212, 154, 62, 0.3);
-            --card-border: rgba(245, 240, 235, 0.08);
-            --card-hover-border: rgba(212, 154, 62, 0.5);
-            --modal-bg: rgba(8, 14, 10, 0.97);
-            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  :root {
+    --bg: #0C1810;
+    --bg2: #111f16;
+    --gold: #C8923A;
+    --gold-lt: #E2B060;
+    --gold-dim: rgba(200,146,58,0.18);
+    --warm: #F0EAE0;
+    --muted: #A89D8E;
+    --dim: rgba(240,234,224,0.06);
+    --border: rgba(200,146,58,0.22);
+    --border-hover: rgba(200,146,58,0.55);
+  }
 
-        html {
-            scroll-behavior: smooth;
-        }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-        body {
-            font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-            color: var(--text-warm);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            background: var(--bg-deep);
-        }
+  body {
+    background: var(--bg);
+    color: var(--warm);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
 
-        /* ── Фоновое видео ── */
-        .bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            filter: brightness(0.4) saturate(0.5);
-            pointer-events: none;
-        }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    position: relative;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(40,72,48,0.35) 0%, transparent 70%);
+  }
 
-        .bg-video-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            background: linear-gradient(180deg,
-                    rgba(15, 26, 20, 0.5) 0%,
-                    rgba(15, 26, 20, 0.65) 50%,
-                    rgba(15, 26, 20, 0.8) 100%);
-            pointer-events: none;
-        }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.6;
+  }
 
-        /* ── Кнопка звука ── */
-        .sound-toggle {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            z-index: 100;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid rgba(212, 154, 62, 0.5);
-            background: rgba(15, 26, 20, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: var(--accent);
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition);
-        }
-        .sound-toggle:hover {
-            border-color: var(--accent);
-            background: rgba(15, 26, 20, 0.9);
-        }
+  .overline {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
 
-        /* ── Секции ── */
-        .section {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 5;
-            padding: 60px 24px;
-        }
+  /* ── HERO HEADING — layered type ── */
+  .hero-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 28px;
+  }
+  .hero-title-shadow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 13vw, 120px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,146,58,0.18);
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-title-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 13vw, 120px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--warm);
+    position: relative;
+    white-space: nowrap;
+  }
+  .hero-title-main em {
+    font-style: italic;
+    color: var(--gold-lt);
+  }
 
-        .container {
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
-        .container-narrow {
-            max-width: 720px;
-        }
+  .hero-sub {
+    font-size: clamp(13px, 1.8vw, 16px);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
 
-        .overline {
-            font-size: 11px;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
+  /* decorative line */
+  .deco-line {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
 
-        h1 {
-            font-size: clamp(36px, 6vw, 64px);
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            color: var(--text-warm);
-        }
+  .hero-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold-lt);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .hero-price-sub {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
 
-        h2 {
-            font-size: clamp(24px, 3.5vw, 36px);
-            font-weight: 300;
-            letter-spacing: -0.01em;
-            margin-bottom: 40px;
-            color: var(--text-warm);
-        }
+  .btn {
+    display: inline-block;
+    padding: 16px 52px;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.35s;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.35s;
+  }
+  .btn:hover::before { transform: translateX(0); }
+  .btn span { position: relative; z-index: 1; }
+  .btn:hover span { color: #0C1810; }
+  .btn:hover { color: #0C1810; }
 
-        h3 {
-            font-size: 13px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
+  .tagline {
+    margin-top: 24px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: rgba(168,157,142,0.55);
+    text-transform: uppercase;
+  }
 
-        .subtitle {
-            font-size: 17px;
-            color: var(--text-muted);
-            font-weight: 350;
-            margin-bottom: 40px;
-            max-width: 460px;
-        }
+  /* ── SECTION ── */
+  .section {
+    padding: 100px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
 
-        .tagline {
-            font-size: 12px;
-            letter-spacing: 0.15em;
-            color: var(--text-muted);
-            margin-top: 20px;
-            text-transform: uppercase;
-        }
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 
-        /* ── Кнопки ── */
-        .btn {
-            display: inline-block;
-            padding: 16px 44px;
-            font-size: 13px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            background: transparent;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-weight: 500;
-            font-family: inherit;
-        }
-        .btn:hover {
-            background: var(--accent);
-            color: #0F1A14;
-            border-color: var(--accent);
-        }
-        .btn:active {
-            transform: scale(0.97);
-        }
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: var(--warm);
+    margin-bottom: 12px;
+  }
+  .section-heading em {
+    font-style: italic;
+    color: var(--gold-lt);
+  }
+  .section-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 56px;
+  }
 
-        .btn-ghost {
-            border-color: transparent;
-            color: var(--text-muted);
-            padding: 10px 24px;
-            font-size: 11px;
-            letter-spacing: 0.15em;
-        }
-        .btn-ghost:hover {
-            color: var(--accent);
-            background: transparent;
-            border-color: transparent;
-        }
+  /* ── PRACTICE CARDS ── */
+  .practices-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
 
-        .btn-large {
-            padding: 20px 56px;
-            font-size: 14px;
-            letter-spacing: 0.22em;
-        }
+  .practice-card {
+    padding: 32px 20px 28px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.4s;
+    text-align: center;
+    position: relative;
+    background: transparent;
+    min-height: 172px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .practice-card:nth-child(4n) { border-right: none; }
+  .practice-card:nth-last-child(-n+4) { border-bottom: none; }
 
-        /* ── Карточки практик ── */
-        .practices-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1px;
-            margin-top: 20px;
-        }
+  .practice-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(40,72,48,0.5), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .practice-card:hover::before { opacity: 1; }
+  .practice-card:hover {
+    background: rgba(200,146,58,0.04);
+  }
 
-        .practice-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid var(--card-border);
-            padding: 28px 20px 24px;
-            cursor: pointer;
-            transition: all var(--transition);
-            text-align: center;
-            position: relative;
-            min-height: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .practice-card:hover {
-            border-color: var(--card-hover-border);
-            background: rgba(15, 26, 20, 0.85);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        }
-        .practice-icon {
-            font-size: 28px;
-            opacity: 0.8;
-            transition: opacity var(--transition);
-        }
-        .practice-card:hover .practice-icon {
-            opacity: 1;
-        }
-        .practice-name {
-            font-size: 12px;
-            letter-spacing: 0.06em;
-            color: var(--text-muted);
-            font-weight: 400;
-            transition: color var(--transition);
-        }
-        .practice-card:hover .practice-name {
-            color: var(--text-warm);
-        }
-        .practice-hint {
-            font-size: 9px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: transparent;
-            transition: color var(--transition);
-            position: absolute;
-            bottom: 14px;
-        }
-        .practice-card:hover .practice-hint {
-            color: rgba(212, 154, 62, 0.6);
-        }
+  .practice-glyph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    opacity: 0.7;
+    line-height: 1;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .practice-card:hover .practice-glyph {
+    opacity: 1;
+    transform: scale(1.08);
+  }
 
-        /* ── Модальные окна ── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity var(--transition);
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal {
-            background: var(--modal-bg);
-            border: 1px solid rgba(212, 154, 62, 0.25);
-            padding: 48px 40px 40px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            transform: translateY(12px);
-            transition: transform var(--transition);
-        }
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-        }
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 8px;
-            line-height: 1;
-            transition: color var(--transition);
-            font-family: inherit;
-        }
-        .modal-close:hover {
-            color: var(--text-warm);
-        }
-        .modal-icon {
-            font-size: 36px;
-            margin-bottom: 16px;
-        }
-        .modal h3 {
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
-        .modal p {
-            color: var(--text-muted);
-            font-size: 14px;
-            line-height: 1.7;
-            font-weight: 350;
-        }
+  .practice-num {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(200,146,58,0.3);
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  .practice-card:hover .practice-num { color: rgba(200,146,58,0.6); }
 
-        /* ── Результаты ── */
-        .results-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin: 40px 0;
-        }
-        .result-item h4 {
-            font-size: 14px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        .result-item p {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 350;
-        }
+  .practice-name {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 400;
+    line-height: 1.45;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .practice-card:hover .practice-name { color: var(--warm); }
 
-        .divider {
-            height: 1px;
-            background: var(--line);
-            margin: 48px 0;
-            width: 100%;
-        }
+  .practice-hint {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: transparent;
+    transition: color 0.3s;
+    position: absolute;
+    bottom: 12px;
+  }
+  .practice-card:hover .practice-hint { color: rgba(200,146,58,0.5); }
 
-        /* ── Цена ── */
-        .price-table {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 28px 0 32px;
-            font-size: 14px;
-            letter-spacing: 0.03em;
-        }
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(245, 240, 235, 0.05);
-            max-width: 440px;
-            margin: 0 auto;
-        }
-        .price-row .price-value {
-            color: var(--text-warm);
-            font-weight: 500;
-        }
-        .price-per-hour {
-            color: var(--accent);
-            font-size: 12px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 28px;
-        }
+  /* ── DIVIDER ── */
+  .hr {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
 
-        /* ── Контакты ── */
-        .contacts-row {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 32px;
-            flex-wrap: wrap;
-        }
-        .contact-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 0.06em;
-            transition: color var(--transition);
-            padding: 8px 12px;
-        }
-        .contact-link:hover {
-            color: var(--accent);
-        }
-        .footer-mantra {
-            margin-top: 40px;
-            font-size: 10px;
-            letter-spacing: 0.15em;
-            color: rgba(196, 187, 175, 0.4);
-            text-transform: uppercase;
-        }
+  /* ── RESULTS ── */
+  .results-section {
+    padding: 100px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-        /* ── Мобильные ── */
-        @media (max-width: 768px) {
-            .section {
-                padding: 40px 16px;
-                min-height: auto;
-            }
-            .practices-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .practice-card {
-                min-height: 130px;
-                padding: 20px 12px 18px;
-            }
-            .results-row {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .modal {
-                padding: 32px 20px 28px;
-                width: 94%;
-            }
-            .btn-large {
-                padding: 16px 36px;
-                font-size: 12px;
-            }
-        }
-        @media (max-width: 400px) {
-            .practices-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 6px;
-            }
-            .practice-card {
-                min-height: 110px;
-                padding: 16px 8px;
-            }
-            .practice-name {
-                font-size: 10px;
-            }
-            .practice-icon {
-                font-size: 22px;
-            }
-        }
-    </style>
-</head>
-<body>
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin: 56px 0;
+  }
 
-    <!-- ═══════════ ФОНОВОЕ ВИДЕО ═══════════ -->
-    <!-- ЗАМЕНИТЕ forest-bg.mp4 НА ПУТЬ К ВАШЕМУ ВИДЕОФАЙЛУ -->
-    <video class="bg-video" id="bgVideo" autoplay loop muted playsinline>
-        <source src="forest-bg.mp4" type="video/mp4">
-    </video>
-    <div class="bg-video-overlay"></div>
+  .result-item {
+    padding: 40px 28px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .result-item:last-child { border-right: none; }
 
-    <!-- ═══════════ КНОПКА ЗВУКА ═══════════ -->
-    <button class="sound-toggle" id="soundToggle" title="Включить звук">🔇</button>
+  .result-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 28px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    opacity: 0.5;
+  }
 
-    <!-- ═══════════ ЭКРАН 1: АТМОСФЕРА + СУТЬ ═══════════ -->
-    <section class="section" id="screen1">
-        <div class="container container-narrow" style="text-align:center;">
-            <div class="overline">25–26 АПРЕЛЯ · ЛЕС</div>
-            <h1>24 ЧАСА<br>ОСОЗНАННОЙ<br>ТИШИНЫ</h1>
-            <p class="subtitle" style="margin:0 auto 40px;">
-                Перезагрузка нервной системы<br>без необходимости надолго<br>выпадать из жизни
-            </p>
-            <a href="#screen3" class="btn btn-large" style="display:inline-block;">Забронировать</a>
-            <p style="margin-top:16px; font-size:18px; font-weight:500; color:var(--accent);">20 985 ₽</p>
-            <p class="tagline">33 часа · 20+ практик · Камерная группа · Дом в лесу</p>
-        </div>
-    </section>
+  .result-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold-lt);
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+  .result-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .result-desc {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
+  }
 
-    <!-- ═══════════ ЭКРАН 2: ПРАКТИКИ ═══════════ -->
-    <section class="section" id="screen2">
-        <div class="container">
-            <h2 style="text-align:center;">Вы проходите 20+ практик<br>за 33 часа.<br><span style="color:var(--text-muted);font-size:0.6em;letter-spacing:0.04em;">Каждая встроена в систему</span></h2>
-            <div class="practices-grid" id="practicesGrid">
-                <!-- Карточки генерируются JS -->
-            </div>
-        </div>
-    </section>
+  /* ── PRICE SECTION ── */
+  .price-section {
+    padding: 100px 24px;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-    <!-- ═══════════ ЭКРАН 3: РЕЗУЛЬТАТ + ЗНАНИЯ + ЦЕНА ═══════════ -->
-    <section class="section" id="screen3">
-        <div class="container container-narrow" style="text-align:center;">
-            <h2>Вы уедете с тихой головой<br>и ясным пониманием,<br>куда двигаться дальше</h2>
+  .price-rows {
+    margin: 44px 0;
+    border: 1px solid var(--border);
+  }
 
-            <div class="results-row">
-                <div class="result-item">
-                    <h4>Тихая голова</h4>
-                    <p>Без фонового шума<br>и тревоги</p>
-                </div>
-                <div class="result-item">
-                    <h4>Собранность</h4>
-                    <p>Ощущение внутренней<br>опоры</p>
-                </div>
-                <div class="result-item">
-                    <h4>Ясное движение</h4>
-                    <p>Понимание куда дальше —<br>без суеты</p>
-                </div>
-            </div>
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .price-row:last-child { border-bottom: none; }
+  .price-row:hover { background: var(--gold-dim); }
 
-            <div class="divider"></div>
+  .price-row-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+  }
+  .price-row-label small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(168,157,142,0.5);
+    margin-top: 3px;
+  }
+  .price-row-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--warm);
+    letter-spacing: -0.01em;
+  }
+  .price-row-val.featured {
+    color: var(--gold-lt);
+    font-size: 30px;
+  }
+  .price-row.featured-row {
+    background: rgba(200,146,58,0.07);
+    position: relative;
+  }
+  .price-row.featured-row::before {
+    content: 'Сейчас';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--gold);
+    border-radius: 0 2px 2px 0;
+  }
 
-            <p style="color:var(--text-muted);font-size:14px;margin-bottom:12px;">
-                Вы забираете инструменты саморегуляции,<br>которые встраиваются в обычную жизнь.<br>Не остаются на ретрите.
-            </p>
-            <button class="btn btn-ghost" onclick="openModal('knowledge')" style="cursor:pointer;">
-                Посмотреть, какие знания вы получите →
-            </button>
+  .price-per-hour {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 36px;
+    opacity: 0.8;
+  }
 
-            <div class="divider"></div>
+  /* ── CONTACTS ── */
+  .contacts-section {
+    padding: 80px 24px 100px;
+    text-align: center;
+  }
 
-            <h3 style="color:var(--text-warm);font-size:15px;">Стоимость участия</h3>
-            <div class="price-table" style="margin:20px auto 24px;">
-                <div class="price-row">
-                    <span>При оплате сейчас ..... </span>
-                    <span class="price-value"> 20 985 ₽</span>
-                </div>
-                <div class="price-row">
-                    <span>За 7 дней до заезда ..... </span>
-                    <span class="price-value"> 22 985 ₽</span>
-                </div>
-                <div class="price-row">
-                    <span>В день заезда.....</span>
-                    <span class="price-value"> 24 985 ₽</span>
-                </div>
-            </div>
-            <p class="price-per-hour">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    max-width: 500px;
+    margin: 28px auto 0;
+    overflow: hidden;
+  }
+  .contact-link {
+    flex: 1;
+    min-width: 100px;
+    padding: 16px 12px;
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-right: 1px solid var(--border);
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+  .contact-link:last-child { border-right: none; }
+  .contact-link:hover {
+    background: var(--gold-dim);
+    color: var(--gold-lt);
+  }
 
-            <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" class="btn btn-large" style="display:inline-block;">
-                Забронировать место
-            </a>
-            <p style="margin-top:12px;font-size:14px;color:var(--text-muted);">+7 962 566 82 55</p>
+  .phone {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-top: 24px;
+  }
 
-            <div class="contacts-row">
-                <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" class="contact-link">Telegram</a>
-                <a href="https://vk.com/yourvk" target="_blank" rel="noopener" class="contact-link">VK</a>
-                <a href="https://instagram.com/yourinstagram" target="_blank" rel="noopener" class="contact-link">Instagram</a>
-                <a href="https://wa.me/79625668255" target="_blank" rel="noopener" class="contact-link">WhatsApp</a>
-            </div>
-            <p class="footer-mantra">Биохакинг всем · Омоложение · Долголетие · Здоровье</p>
-        </div>
-    </section>
+  .footer-mantra {
+    margin-top: 56px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(168,157,142,0.25);
+    text-transform: uppercase;
+  }
 
-    <!-- ═══════════ МОДАЛЬНЫЕ ОКНА ═══════════ -->
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-        <div class="modal" id="modalBox" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModalDirect()">✕</button>
-            <div class="modal-icon" id="modalIcon"></div>
-            <h3 id="modalTitle"></h3>
-            <p id="modalText"></p>
-        </div>
+  /* ── MODAL ── */
+  .modal-wrap {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    padding: 24px;
+  }
+  .modal-wrap.open { opacity: 1; pointer-events: auto; }
+
+  .modal {
+    background: #0e1d13;
+    border: 1px solid var(--border-hover);
+    padding: 48px 40px 40px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    transform: translateY(10px);
+    transition: transform 0.3s;
+  }
+  .modal-wrap.open .modal { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    line-height: 1;
+    font-family: inherit;
+  }
+  .modal-close:hover { color: var(--warm); }
+
+  .modal-glyph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+    opacity: 0.8;
+  }
+
+  .modal h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--warm);
+    margin-bottom: 16px;
+    text-transform: none;
+  }
+  .modal p {
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  @media (max-width: 640px) {
+    .practices-grid { grid-template-columns: repeat(2,1fr); }
+    .practice-card:nth-child(4n) { border-right: 1px solid var(--border); }
+    .practice-card:nth-child(2n) { border-right: none; }
+    .results-grid { grid-template-columns: 1fr; }
+    .result-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .result-item:last-child { border-bottom: none; }
+    .hero-title-main, .hero-title-shadow { font-size: 64px; }
+    .price-row { padding: 16px 20px; }
+  }
+</style>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="position:relative; z-index:2; text-align:center;">
+    <div class="overline">25–26 апреля · Лес</div>
+
+    <div class="hero-title" style="display:block; margin-bottom:32px;">
+      <div class="hero-title-shadow" aria-hidden="true">24 часа<br>тишины</div>
+      <div class="hero-title-main">24 <em>часа</em><br>тишины</div>
     </div>
 
-    <script>
-        // ── Данные практик ──
-        const practices = [
-            {
-                id: 'silence',
-                icon: '🌫',
-                name: 'Осознанное молчание',
-                title: 'Осознанное молчание',
-                text: '24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.'
-            },
-            {
-                id: 'detox',
-                icon: '📵',
-                name: 'Цифровой детокс',
-                title: 'Цифровой детокс',
-                text: 'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.'
-            },
-            {
-                id: 'breath',
-                icon: '🫁',
-                name: 'Дыхательные нейропрактики',
-                title: 'Дыхательные нейропрактики',
-                text: 'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима «бей или беги» в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.'
-            },
-            {
-                id: 'yoga',
-                icon: '🧘',
-                name: 'Йога и работа с зажимами',
-                title: 'Йога и работа с зажимами',
-                text: 'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без «правильных» форм.'
-            },
-            {
-                id: 'food',
-                icon: '🍃',
-                name: 'Осознанное питание',
-                title: 'Осознанное питание',
-                text: 'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Мы даём конкретные принципы питания для мозга и энергии — без догм и диет.'
-            },
-            {
-                id: 'banya',
-                icon: '🔥',
-                name: 'Баня как практика',
-                title: 'Баня как практика восстановления',
-                text: 'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.'
-            },
-            {
-                id: 'meditation',
-                icon: '🧠',
-                name: 'Медитации для нервной системы',
-                title: 'Медитации для регуляции нервной системы',
-                text: 'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на «духовные переживания». Вы получаете аудиозаписи для самостоятельной практики дома.'
-            },
-            {
-                id: 'voice',
-                icon: '🗣',
-                name: 'Выход из тишины',
-                title: 'Выход из тишины и проявленность',
-                text: 'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.'
-            }
-        ];
+    <div class="deco-line"></div>
 
-        const knowledgeData = {
-            id: 'knowledge',
-            icon: '📚',
-            title: 'Знания и инструменты, которые вы забираете',
-            text: '• Основы биохакинга нервной системы\n• Как стресс влияет на психику и тело\n• Дыхательные техники быстрой стабилизации\n• Влияние питания на мозг и энергию\n• Методики саморегуляции\n• Инструменты для фокуса и устойчивости\n\nЭто прикладные знания, которые встраиваются в обычную жизнь, а не остаются на ретрите.'
-        };
+    <p class="hero-sub">
+      Перезагрузка нервной системы<br>
+      33 часа · 20+ практик · Камерная группа · Дом в лесу
+    </p>
 
-        // ── Генерация сетки практик ──
-        const grid = document.getElementById('practicesGrid');
-        practices.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'practice-card';
-            card.onclick = () => openModal(p.id);
-            card.innerHTML = `
-                <span class="practice-icon">${p.icon}</span>
-                <span class="practice-name">${p.name}</span>
-                <span class="practice-hint">Подробнее</span>
-            `;
-            grid.appendChild(card);
-        });
+    <div class="hero-price">20 985 ₽</div>
+    <div class="hero-price-sub">1 час ≈ 511 ₽ · 33 часа осмысленной практики</div>
 
-        // ── Модальные окна ──
-        function getModalData(id) {
-            if (id === 'knowledge') return knowledgeData;
-            return practices.find(p => p.id === id);
-        }
+    <a href="#price" class="btn"><span>Забронировать место</span></a>
+    <div class="tagline">Биохакинг · Омоложение · Долголетие · Здоровье</div>
+  </div>
+</div>
 
-        function openModal(id) {
-            const data = getModalData(id);
-            if (!data) return;
-            document.getElementById('modalIcon').textContent = data.icon;
-            document.getElementById('modalTitle').textContent = data.title;
-            document.getElementById('modalText').innerHTML = data.text.replace(/\n/g, '<br>');
-            document.getElementById('modalOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+<div class="hr"></div>
 
-        function closeModalDirect() {
-            document.getElementById('modalOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        }
+<!-- PRACTICES -->
+<div class="section">
+  <div class="section-eyebrow">Программа</div>
+  <h2 class="section-heading">Вы проходите 20+ практик<br>за <em>33 часа</em></h2>
+  <p class="section-note">Каждая встроена в систему</p>
+  <div class="practices-grid" id="practicesGrid"></div>
+</div>
 
-        function closeModal(e) {
-            if (e.target === document.getElementById('modalOverlay')) {
-                closeModalDirect();
-            }
-        }
+<div class="hr"></div>
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModalDirect();
-        });
+<!-- RESULTS -->
+<div class="results-section">
+  <div class="section-eyebrow">Результат</div>
+  <h2 class="section-heading">Вы уедете с тихой головой<br>и <em>ясным движением</em> вперёд</h2>
+  <div class="results-grid">
+    <div class="result-item">
+      <span class="result-num">∅</span>
+      <span class="result-label">Тихая голова</span>
+      <p class="result-desc">Без фонового шума<br>и тревоги</p>
+    </div>
+    <div class="result-item">
+      <span class="result-num">⌘</span>
+      <span class="result-label">Собранность</span>
+      <p class="result-desc">Ощущение внутренней<br>опоры</p>
+    </div>
+    <div class="result-item">
+      <span class="result-num">→</span>
+      <span class="result-label">Ясное движение</span>
+      <p class="result-desc">Понимание куда дальше —<br>без суеты</p>
+    </div>
+  </div>
 
-        // ── Плавный скролл ──
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+  <p style="font-size:13px; color:var(--muted); font-weight:300; line-height:1.85; margin-bottom:20px;">
+    Вы забираете инструменты саморегуляции,<br>которые встраиваются в обычную жизнь.<br>Не остаются на ретрите.
+  </p>
+  <button class="btn" onclick="openModal('knowledge')" style="padding:12px 36px; font-size:10px; letter-spacing:0.2em;">
+    <span>Какие знания вы получите →</span>
+  </button>
+</div>
 
-        // ── Управление звуком видео ──
-        const video = document.getElementById('bgVideo');
-        const soundBtn = document.getElementById('soundToggle');
-        let isMuted = true;
+<div class="hr"></div>
 
-        soundBtn.addEventListener('click', () => {
-            if (isMuted) {
-                video.muted = false;
-                video.volume = 0.6;
-                soundBtn.textContent = '🔊';
-                soundBtn.title = 'Выключить звук';
-                // Пробуем запустить звук (браузеры требуют взаимодействия)
-                video.play().catch(() => {});
-            } else {
-                video.muted = true;
-                soundBtn.textContent = '🔇';
-                soundBtn.title = 'Включить звук';
-            }
-            isMuted = !isMuted;
-        });
-    </script>
-</body>
-</html>
+<!-- PRICE -->
+<div class="price-section" id="price">
+  <div class="section-eyebrow">Стоимость</div>
+  <h2 class="section-heading">Инвестиция<br>в <em>тишину</em></h2>
+
+  <div class="price-rows">
+    <div class="price-row featured-row">
+      <div class="price-row-label">
+        При оплате сейчас
+        <small>Лучшая цена</small>
+      </div>
+      <div class="price-row-val featured">20 985 ₽</div>
+    </div>
+    <div class="price-row">
+      <div class="price-row-label">
+        За 7 дней до заезда
+        <small>Стандарт</small>
+      </div>
+      <div class="price-row-val">22 985 ₽</div>
+    </div>
+    <div class="price-row">
+      <div class="price-row-label">
+        В день заезда
+        <small>Последний момент</small>
+      </div>
+      <div class="price-row-val">24 985 ₽</div>
+    </div>
+  </div>
+
+  <p class="price-per-hour">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
+
+  <a href="https://t.me/yourtelegram" class="btn btn-large" style="padding:18px 56px; font-size:11px;">
+    <span>Забронировать место</span>
+  </a>
+</div>
+
+<div class="hr"></div>
+
+<!-- CONTACTS -->
+<div class="contacts-section">
+  <div class="section-eyebrow">Связаться</div>
+  <p class="phone">+7 962 566 82 55</p>
+  <div class="contact-links">
+    <a href="https://t.me/yourtelegram" class="contact-link">Telegram</a>
+    <a href="https://vk.com/yourvk" class="contact-link">VK</a>
+    <a href="https://instagram.com/yourinstagram" class="contact-link">Instagram</a>
+    <a href="https://wa.me/79625668255" class="contact-link">WhatsApp</a>
+  </div>
+  <p class="footer-mantra">Биохакинг всем · Омоложение · Долголетие · Здоровье</p>
+</div>
+
+<!-- MODAL -->
+<div class="modal-wrap" id="modalWrap" onclick="handleOverlayClick(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <span class="modal-glyph" id="mGlyph"></span>
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+  </div>
+</div>
+
+<script>
+const practices = [
+  { id:'silence', g:'∅', name:'Осознанное молчание', title:'Осознанное молчание', text:'24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.' },
+  { id:'detox', g:'⊘', name:'Цифровой детокс', title:'Цифровой детокс', text:'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.' },
+  { id:'breath', g:'↺', name:'Дыхательные нейропрактики', title:'Дыхательные нейропрактики', text:'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.' },
+  { id:'yoga', g:'△', name:'Йога и работа с зажимами', title:'Йога и работа с зажимами', text:'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без правильных форм.' },
+  { id:'food', g:'◇', name:'Осознанное питание', title:'Осознанное питание', text:'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Конкретные принципы питания для мозга и энергии — без догм и диет.' },
+  { id:'banya', g:'☽', name:'Баня как практика', title:'Баня как практика восстановления', text:'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.' },
+  { id:'med', g:'○', name:'Медитации', title:'Медитации для нервной системы', text:'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на духовные переживания. Вы получаете аудиозаписи для самостоятельной практики дома.' },
+  { id:'voice', g:'→', name:'Выход из тишины', title:'Выход из тишины и проявленность', text:'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.' }
+];
+const knowledgeData = { id:'knowledge', g:'∞', title:'Знания, которые вы забираете', text:'• Основы биохакинга нервной системы\n• Как стресс влияет на психику и тело\n• Дыхательные техники быстрой стабилизации\n• Влияние питания на мозг и энергию\n• Методики саморегуляции\n• Инструменты для фокуса и устойчивости\n\nЭто прикладные знания, которые встраиваются в обычную жизнь, а не остаются на ретрите.' };
+
+const grid = document.getElementById('practicesGrid');
+practices.forEach((p, i) => {
+  const c = document.createElement('div');
+  c.className = 'practice-card';
+  c.onclick = () => openModal(p.id);
+  c.innerHTML = `<span class="practice-num">0${i+1}</span><span class="practice-glyph">${p.g}</span><span class="practice-name">${p.name}</span><span class="practice-hint">Подробнее</span>`;
+  grid.appendChild(c);
+});
+
+function openModal(id) {
+  const d = id === 'knowledge' ? knowledgeData : practices.find(p => p.id === id);
+  if (!d) return;
+  document.getElementById('mGlyph').textContent = d.g;
+  document.getElementById('mTitle').textContent = d.title;
+  document.getElementById('mText').innerHTML = d.text.replace(/\n/g,'<br>');
+  document.getElementById('modalWrap').classList.add('open');
+}
+function closeModal() { document.getElementById('modalWrap').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalWrap')) closeModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
