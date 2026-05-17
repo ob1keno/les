@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-deep: #0F1A14;
-            --bg-card: rgba(15, 26, 20, 0.75);
+            --bg-card: rgba(15, 26, 20, 0.7);
             --text-warm: #F5F0EB;
             --text-muted: #C4BBAF;
             --accent: #D49A3E;
@@ -16,7 +16,6 @@
             --card-border: rgba(245, 240, 235, 0.08);
             --card-hover-border: rgba(212, 154, 62, 0.5);
             --modal-bg: rgba(8, 14, 10, 0.97);
-            --radius: 2px;
             --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -28,20 +27,69 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-snap-type: y proximity;
         }
 
         body {
             font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-deep);
             color: var(--text-warm);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            background: var(--bg-deep);
         }
 
-        /* ── Типографика ── */
+        /* ── Фоновое видео ── */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.4) saturate(0.5);
+            pointer-events: none;
+        }
+
+        .bg-video-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(180deg,
+                    rgba(15, 26, 20, 0.5) 0%,
+                    rgba(15, 26, 20, 0.65) 50%,
+                    rgba(15, 26, 20, 0.8) 100%);
+            pointer-events: none;
+        }
+
+        /* ── Кнопка звука ── */
+        .sound-toggle {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 100;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 154, 62, 0.5);
+            background: rgba(15, 26, 20, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--accent);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+        .sound-toggle:hover {
+            border-color: var(--accent);
+            background: rgba(15, 26, 20, 0.9);
+        }
+
+        /* ── Секции ── */
         .section {
             min-height: 100vh;
             min-height: 100dvh;
@@ -49,9 +97,8 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            scroll-snap-align: start;
+            z-index: 5;
             padding: 60px 24px;
-            overflow: hidden;
         }
 
         .container {
@@ -59,9 +106,8 @@
             width: 100%;
             margin: 0 auto;
             position: relative;
-            z-index: 2;
+            z-index: 10;
         }
-
         .container-narrow {
             max-width: 720px;
         }
@@ -117,41 +163,6 @@
             text-transform: uppercase;
         }
 
-        /* ── Фоновые слои ── */
-        .bg-layer {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .bg-layer img,
-        .bg-layer video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.35) saturate(0.6);
-        }
-
-        .bg-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg,
-                    rgba(15, 26, 20, 0.55) 0%,
-                    rgba(15, 26, 20, 0.7) 40%,
-                    rgba(15, 26, 20, 0.85) 100%);
-            z-index: 1;
-        }
-
-        .bg-texture {
-            position: absolute;
-            inset: 0;
-            background-image:
-                radial-gradient(ellipse at 30% 20%, rgba(107, 139, 92, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 80%, rgba(212, 154, 62, 0.04) 0%, transparent 50%);
-            z-index: 0;
-        }
-
         /* ── Кнопки ── */
         .btn {
             display: inline-block;
@@ -166,10 +177,8 @@
             cursor: pointer;
             transition: all var(--transition);
             font-weight: 500;
-            position: relative;
             font-family: inherit;
         }
-
         .btn:hover {
             background: var(--accent);
             color: #0F1A14;
@@ -203,7 +212,6 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1px;
-            background: transparent;
             margin-top: 20px;
         }
 
@@ -226,9 +234,9 @@
         }
         .practice-card:hover {
             border-color: var(--card-hover-border);
-            background: rgba(15, 26, 20, 0.9);
+            background: rgba(15, 26, 20, 0.85);
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
         .practice-icon {
             font-size: 28px;
@@ -265,7 +273,7 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            z-index: 100;
+            z-index: 200;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
@@ -369,6 +377,7 @@
             padding: 6px 0;
             border-bottom: 1px solid rgba(245, 240, 235, 0.05);
             max-width: 440px;
+            margin: 0 auto;
         }
         .price-row .price-value {
             color: var(--text-warm);
@@ -388,6 +397,7 @@
             gap: 20px;
             justify-content: center;
             margin-top: 32px;
+            flex-wrap: wrap;
         }
         .contact-link {
             color: var(--text-muted);
@@ -413,7 +423,6 @@
             .section {
                 padding: 40px 16px;
                 min-height: auto;
-                scroll-snap-align: none;
             }
             .practices-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -455,13 +464,18 @@
 </head>
 <body>
 
+    <!-- ═══════════ ФОНОВОЕ ВИДЕО ═══════════ -->
+    <!-- ЗАМЕНИТЕ forest-bg.mp4 НА ПУТЬ К ВАШЕМУ ВИДЕОФАЙЛУ -->
+    <video class="bg-video" id="bgVideo" autoplay loop muted playsinline>
+        <source src="forest-bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-video-overlay"></div>
+
+    <!-- ═══════════ КНОПКА ЗВУКА ═══════════ -->
+    <button class="sound-toggle" id="soundToggle" title="Включить звук">🔇</button>
+
     <!-- ═══════════ ЭКРАН 1: АТМОСФЕРА + СУТЬ ═══════════ -->
     <section class="section" id="screen1">
-        <div class="bg-layer">
-            <div class="bg-texture"></div>
-            <div style="background: radial-gradient(ellipse at 50% 40%, #1a2e1f 0%, #0a140e 100%); width:100%;height:100%;"></div>
-            <div class="bg-overlay"></div>
-        </div>
         <div class="container container-narrow" style="text-align:center;">
             <div class="overline">25–26 АПРЕЛЯ · ЛЕС</div>
             <h1>24 ЧАСА<br>ОСОЗНАННОЙ<br>ТИШИНЫ</h1>
@@ -476,11 +490,6 @@
 
     <!-- ═══════════ ЭКРАН 2: ПРАКТИКИ ═══════════ -->
     <section class="section" id="screen2">
-        <div class="bg-layer">
-            <div class="bg-texture"></div>
-            <div style="background: radial-gradient(ellipse at 30% 60%, #1a2818 0%, #0c160e 100%); width:100%;height:100%;"></div>
-            <div class="bg-overlay"></div>
-        </div>
         <div class="container">
             <h2 style="text-align:center;">Вы проходите 20+ практик<br>за 33 часа.<br><span style="color:var(--text-muted);font-size:0.6em;letter-spacing:0.04em;">Каждая встроена в систему</span></h2>
             <div class="practices-grid" id="practicesGrid">
@@ -491,11 +500,6 @@
 
     <!-- ═══════════ ЭКРАН 3: РЕЗУЛЬТАТ + ЗНАНИЯ + ЦЕНА ═══════════ -->
     <section class="section" id="screen3">
-        <div class="bg-layer">
-            <div class="bg-texture"></div>
-            <div style="background: radial-gradient(ellipse at 70% 30%, #1e2616 0%, #0e140c 100%); width:100%;height:100%;"></div>
-            <div class="bg-overlay"></div>
-        </div>
         <div class="container container-narrow" style="text-align:center;">
             <h2>Вы уедете с тихой головой<br>и ясным пониманием,<br>куда двигаться дальше</h2>
 
@@ -569,57 +573,65 @@
 
     <script>
         // ── Данные практик ──
-        const practices = [{
-            id: 'silence',
-            icon: '🌫',
-            name: 'Осознанное молчание',
-            title: 'Осознанное молчание',
-            text: '24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.'
-        }, {
-            id: 'detox',
-            icon: '📵',
-            name: 'Цифровой детокс',
-            title: 'Цифровой детокс',
-            text: 'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.'
-        }, {
-            id: 'breath',
-            icon: '🫁',
-            name: 'Дыхательные нейропрактики',
-            title: 'Дыхательные нейропрактики',
-            text: 'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима «бей или беги» в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.'
-        }, {
-            id: 'yoga',
-            icon: '🧘',
-            name: 'Йога и работа с зажимами',
-            title: 'Йога и работа с зажимами',
-            text: 'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без «правильных» форм.'
-        }, {
-            id: 'food',
-            icon: '🍃',
-            name: 'Осознанное питание',
-            title: 'Осознанное питание',
-            text: 'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Мы даём конкретные принципы питания для мозга и энергии — без догм и диет.'
-        }, {
-            id: 'banya',
-            icon: '🔥',
-            name: 'Баня как практика',
-            title: 'Баня как практика восстановления',
-            text: 'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.'
-        }, {
-            id: 'meditation',
-            icon: '🧠',
-            name: 'Медитации для нервной системы',
-            title: 'Медитации для регуляции нервной системы',
-            text: 'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на «духовные переживания». Вы получаете аудиозаписи для самостоятельной практики дома.'
-        }, {
-            id: 'voice',
-            icon: '🗣',
-            name: 'Выход из тишины',
-            title: 'Выход из тишины и проявленность',
-            text: 'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.'
-        }];
+        const practices = [
+            {
+                id: 'silence',
+                icon: '🌫',
+                name: 'Осознанное молчание',
+                title: 'Осознанное молчание',
+                text: '24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.'
+            },
+            {
+                id: 'detox',
+                icon: '📵',
+                name: 'Цифровой детокс',
+                title: 'Цифровой детокс',
+                text: 'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.'
+            },
+            {
+                id: 'breath',
+                icon: '🫁',
+                name: 'Дыхательные нейропрактики',
+                title: 'Дыхательные нейропрактики',
+                text: 'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима «бей или беги» в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.'
+            },
+            {
+                id: 'yoga',
+                icon: '🧘',
+                name: 'Йога и работа с зажимами',
+                title: 'Йога и работа с зажимами',
+                text: 'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без «правильных» форм.'
+            },
+            {
+                id: 'food',
+                icon: '🍃',
+                name: 'Осознанное питание',
+                title: 'Осознанное питание',
+                text: 'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Мы даём конкретные принципы питания для мозга и энергии — без догм и диет.'
+            },
+            {
+                id: 'banya',
+                icon: '🔥',
+                name: 'Баня как практика',
+                title: 'Баня как практика восстановления',
+                text: 'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.'
+            },
+            {
+                id: 'meditation',
+                icon: '🧠',
+                name: 'Медитации для нервной системы',
+                title: 'Медитации для регуляции нервной системы',
+                text: 'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на «духовные переживания». Вы получаете аудиозаписи для самостоятельной практики дома.'
+            },
+            {
+                id: 'voice',
+                icon: '🗣',
+                name: 'Выход из тишины',
+                title: 'Выход из тишины и проявленность',
+                text: 'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.'
+            }
+        ];
 
-        // ── Данные знаний ──
         const knowledgeData = {
             id: 'knowledge',
             icon: '📚',
@@ -634,10 +646,10 @@
             card.className = 'practice-card';
             card.onclick = () => openModal(p.id);
             card.innerHTML = `
-            <span class="practice-icon">${p.icon}</span>
-            <span class="practice-name">${p.name}</span>
-            <span class="practice-hint">Подробнее</span>
-          `;
+                <span class="practice-icon">${p.icon}</span>
+                <span class="practice-name">${p.name}</span>
+                <span class="practice-hint">Подробнее</span>
+            `;
             grid.appendChild(card);
         });
 
@@ -668,12 +680,11 @@
             }
         }
 
-        // ── Закрытие по Escape ──
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModalDirect();
         });
 
-        // ── Плавный скролл для кнопки «Забронировать» на первом экране ──
+        // ── Плавный скролл ──
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const target = document.querySelector(this.getAttribute('href'));
@@ -682,6 +693,27 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+
+        // ── Управление звуком видео ──
+        const video = document.getElementById('bgVideo');
+        const soundBtn = document.getElementById('soundToggle');
+        let isMuted = true;
+
+        soundBtn.addEventListener('click', () => {
+            if (isMuted) {
+                video.muted = false;
+                video.volume = 0.6;
+                soundBtn.textContent = '🔊';
+                soundBtn.title = 'Выключить звук';
+                // Пробуем запустить звук (браузеры требуют взаимодействия)
+                video.play().catch(() => {});
+            } else {
+                video.muted = true;
+                soundBtn.textContent = '🔇';
+                soundBtn.title = 'Включить звук';
+            }
+            isMuted = !isMuted;
         });
     </script>
 </body>
