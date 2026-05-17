@@ -3,56 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>24 часа тишины в лесу — Перезагрузка нервной системы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
-
   :root {
     --bg: #0C1810;
     --bg2: #111f16;
     --gold: #C8923A;
     --gold-lt: #E2B060;
-    --gold-dim: rgba(200,146,58,0.18);
+    --gold-dim: rgba(200,146,58,0.12);
     --warm: #F0EAE0;
     --muted: #A89D8E;
     --dim: rgba(240,234,224,0.06);
     --border: rgba(200,146,58,0.22);
     --border-hover: rgba(200,146,58,0.55);
+    --transition: 0.38s cubic-bezier(0.4,0,0.2,1);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
     color: var(--warm);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    min-height: 100vh;
+  }
+
+  /* ── BACKGROUND VIDEO ── */
+  .bg-video {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.35) saturate(0.5);
+    pointer-events: none;
+  }
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg,
+      rgba(12,24,16,0.55) 0%,
+      rgba(12,24,16,0.65) 50%,
+      rgba(12,24,16,0.82) 100%);
+    pointer-events: none;
+  }
+
+  /* ── SOUND TOGGLE ── */
+  .sound-toggle {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 100;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(12,24,16,0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--gold);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+  }
+  .sound-toggle:hover {
+    border-color: var(--gold);
+    background: rgba(12,24,16,0.9);
   }
 
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 80px 24px;
     position: relative;
-    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(40,72,48,0.35) 0%, transparent 70%);
+    z-index: 5;
   }
-
-  .hero::before {
+  .hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(40,72,48,0.3) 0%, transparent 70%);
     pointer-events: none;
-    opacity: 0.6;
+    z-index: -1;
   }
 
   .overline {
-    font-family: 'Inter', sans-serif;
     font-size: 10px;
     letter-spacing: 0.35em;
     text-transform: uppercase;
@@ -60,42 +109,44 @@
     margin-bottom: 32px;
     font-weight: 500;
     opacity: 0.9;
+    display: block;
   }
 
-  /* ── HERO HEADING — layered type ── */
-  .hero-title {
+  /* layered heading */
+  .hero-title-wrap {
     position: relative;
     display: inline-block;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
+    line-height: 0.9;
   }
   .hero-title-shadow {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(72px, 13vw, 120px);
+    font-size: clamp(72px, 13vw, 118px);
     font-weight: 300;
-    line-height: 0.9;
     letter-spacing: -0.03em;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(200,146,58,0.18);
+    -webkit-text-stroke: 1px rgba(200,146,58,0.15);
     position: absolute;
-    top: 3px;
-    left: 3px;
-    white-space: nowrap;
+    top: 4px; left: 4px;
     pointer-events: none;
     user-select: none;
+    white-space: pre-line;
   }
   .hero-title-main {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(72px, 13vw, 120px);
+    font-size: clamp(72px, 13vw, 118px);
     font-weight: 300;
-    line-height: 0.9;
     letter-spacing: -0.03em;
     color: var(--warm);
     position: relative;
-    white-space: nowrap;
+    white-space: pre-line;
   }
-  .hero-title-main em {
-    font-style: italic;
-    color: var(--gold-lt);
+  .hero-title-main em { font-style: italic; color: var(--gold-lt); }
+
+  .deco-line {
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
   }
 
   .hero-sub {
@@ -103,34 +154,27 @@
     color: var(--muted);
     font-weight: 300;
     letter-spacing: 0.04em;
-    margin-bottom: 48px;
-    line-height: 1.8;
-  }
-
-  /* decorative line */
-  .deco-line {
-    width: 40px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 0 auto 32px;
+    margin-bottom: 44px;
+    line-height: 1.85;
   }
 
   .hero-price {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 300;
     color: var(--gold-lt);
     letter-spacing: 0.02em;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .hero-price-sub {
     font-size: 10px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--muted);
     margin-bottom: 40px;
   }
 
+  /* ── BUTTONS ── */
   .btn {
     display: inline-block;
     padding: 16px 52px;
@@ -142,7 +186,7 @@
     color: var(--gold);
     background: transparent;
     cursor: pointer;
-    transition: all 0.35s;
+    transition: all var(--transition);
     font-weight: 500;
     font-family: 'Inter', sans-serif;
     position: relative;
@@ -153,28 +197,50 @@
     position: absolute;
     inset: 0;
     background: var(--gold);
-    transform: translateX(-100%);
-    transition: transform 0.35s;
+    transform: translateX(-101%);
+    transition: transform var(--transition);
   }
+  .btn span { position: relative; z-index: 1; transition: color var(--transition); }
   .btn:hover::before { transform: translateX(0); }
-  .btn span { position: relative; z-index: 1; }
   .btn:hover span { color: #0C1810; }
   .btn:hover { color: #0C1810; }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-ghost {
+    border-color: transparent;
+    color: var(--muted);
+    padding: 10px 24px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+  .btn-ghost:hover { color: var(--gold-lt); background: transparent; border-color: transparent; }
+  .btn-ghost::before { display: none; }
 
   .tagline {
     margin-top: 24px;
     font-size: 10px;
     letter-spacing: 0.18em;
-    color: rgba(168,157,142,0.55);
+    color: rgba(168,157,142,0.4);
     text-transform: uppercase;
   }
 
-  /* ── SECTION ── */
+  /* ── SECTIONS ── */
   .section {
-    padding: 100px 24px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    padding: 80px 24px;
+  }
+  .container {
     max-width: 960px;
+    width: 100%;
     margin: 0 auto;
   }
+  .container-narrow { max-width: 700px; }
 
   .section-eyebrow {
     font-size: 10px;
@@ -185,7 +251,6 @@
     margin-bottom: 20px;
     text-align: center;
   }
-
   .section-heading {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(32px, 5vw, 52px);
@@ -196,28 +261,23 @@
     color: var(--warm);
     margin-bottom: 12px;
   }
-  .section-heading em {
-    font-style: italic;
-    color: var(--gold-lt);
-  }
+  .section-heading em { font-style: italic; color: var(--gold-lt); }
   .section-note {
     text-align: center;
     font-size: 13px;
     color: var(--muted);
     font-weight: 300;
-    letter-spacing: 0.05em;
-    margin-bottom: 56px;
+    letter-spacing: 0.06em;
+    margin-bottom: 52px;
   }
 
-  /* ── PRACTICE CARDS ── */
+  /* ── PRACTICES GRID ── */
   .practices-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
     border: 1px solid var(--border);
-    overflow: hidden;
   }
-
   .practice-card {
     padding: 32px 20px 28px;
     border-right: 1px solid var(--border);
@@ -236,7 +296,6 @@
   }
   .practice-card:nth-child(4n) { border-right: none; }
   .practice-card:nth-last-child(-n+4) { border-bottom: none; }
-
   .practice-card::before {
     content: '';
     position: absolute;
@@ -246,43 +305,37 @@
     transition: opacity 0.4s;
   }
   .practice-card:hover::before { opacity: 1; }
-  .practice-card:hover {
-    background: rgba(200,146,58,0.04);
-  }
-
-  .practice-glyph {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--gold);
-    opacity: 0.7;
-    line-height: 1;
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .practice-card:hover .practice-glyph {
-    opacity: 1;
-    transform: scale(1.08);
-  }
+  .practice-card:hover { background: rgba(200,146,58,0.04); }
 
   .practice-num {
     position: absolute;
-    top: 12px;
-    left: 14px;
+    top: 12px; left: 14px;
     font-size: 9px;
     letter-spacing: 0.1em;
-    color: rgba(200,146,58,0.3);
+    color: rgba(200,146,58,0.28);
     font-weight: 500;
     transition: color 0.3s;
   }
   .practice-card:hover .practice-num { color: rgba(200,146,58,0.6); }
 
+  .practice-glyph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    opacity: 0.65;
+    line-height: 1;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .practice-card:hover .practice-glyph { opacity: 1; transform: scale(1.1); }
+
   .practice-name {
     font-size: 11px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     color: var(--muted);
     font-weight: 400;
-    line-height: 1.45;
+    line-height: 1.5;
     transition: color 0.3s;
     position: relative;
   }
@@ -304,49 +357,41 @@
     width: 100%;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--border), transparent);
-    margin: 0;
+    position: relative;
+    z-index: 5;
   }
 
   /* ── RESULTS ── */
-  .results-section {
-    padding: 100px 24px;
-    max-width: 960px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
   .results-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
     border: 1px solid var(--border);
-    margin: 56px 0;
+    margin: 52px 0;
   }
-
   .result-item {
-    padding: 40px 28px;
+    padding: 44px 28px;
     border-right: 1px solid var(--border);
     position: relative;
+    text-align: left;
   }
   .result-item:last-child { border-right: none; }
-
   .result-item::after {
     content: '';
     position: absolute;
     top: 0; left: 50%;
     transform: translateX(-50%);
-    width: 1px; height: 28px;
+    width: 1px; height: 32px;
     background: linear-gradient(180deg, var(--gold), transparent);
-    opacity: 0.5;
+    opacity: 0.45;
   }
-
   .result-num {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 300;
     color: var(--gold-lt);
     line-height: 1;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     letter-spacing: -0.02em;
     display: block;
   }
@@ -363,73 +408,56 @@
     font-size: 12px;
     color: var(--muted);
     font-weight: 300;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
-  /* ── PRICE SECTION ── */
-  .price-section {
-    padding: 100px 24px;
-    max-width: 680px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
+  /* ── PRICE ── */
   .price-rows {
-    margin: 44px 0;
     border: 1px solid var(--border);
+    margin: 44px 0;
   }
-
   .price-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 32px;
+    padding: 20px 32px;
     border-bottom: 1px solid var(--border);
-    transition: background 0.3s;
+    transition: background var(--transition);
+    position: relative;
   }
   .price-row:last-child { border-bottom: none; }
   .price-row:hover { background: var(--gold-dim); }
-
+  .price-row.featured { background: rgba(200,146,58,0.07); }
+  .price-row.featured::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 3px; height: 55%;
+    background: var(--gold);
+  }
   .price-row-label {
     font-size: 12px;
     color: var(--muted);
     font-weight: 300;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
   }
   .price-row-label small {
     display: block;
     font-size: 9px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(168,157,142,0.5);
-    margin-top: 3px;
+    color: rgba(168,157,142,0.45);
+    margin-top: 4px;
   }
   .price-row-val {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 300;
     color: var(--warm);
     letter-spacing: -0.01em;
   }
-  .price-row-val.featured {
-    color: var(--gold-lt);
-    font-size: 30px;
-  }
-  .price-row.featured-row {
-    background: rgba(200,146,58,0.07);
-    position: relative;
-  }
-  .price-row.featured-row::before {
-    content: 'Сейчас';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 60%;
-    background: var(--gold);
-    border-radius: 0 2px 2px 0;
-  }
+  .price-row-val.featured { color: var(--gold-lt); font-size: 32px; }
 
   .price-per-hour {
     font-size: 10px;
@@ -437,24 +465,17 @@
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 36px;
-    opacity: 0.8;
+    opacity: 0.75;
   }
 
   /* ── CONTACTS ── */
-  .contacts-section {
-    padding: 80px 24px 100px;
-    text-align: center;
-  }
-
   .contact-links {
     display: flex;
-    justify-content: center;
-    gap: 0;
-    flex-wrap: wrap;
     border: 1px solid var(--border);
-    max-width: 500px;
+    max-width: 520px;
     margin: 28px auto 0;
     overflow: hidden;
+    flex-wrap: wrap;
   }
   .contact-link {
     flex: 1;
@@ -466,8 +487,9 @@
     text-transform: uppercase;
     color: var(--muted);
     border-right: 1px solid var(--border);
-    transition: all 0.3s;
+    transition: all var(--transition);
     font-weight: 400;
+    text-align: center;
   }
   .contact-link:last-child { border-right: none; }
   .contact-link:hover {
@@ -477,52 +499,52 @@
 
   .phone {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 300;
     color: var(--muted);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     margin-top: 24px;
   }
 
   .footer-mantra {
-    margin-top: 56px;
+    margin-top: 52px;
     font-size: 9px;
     letter-spacing: 0.2em;
-    color: rgba(168,157,142,0.25);
+    color: rgba(168,157,142,0.22);
     text-transform: uppercase;
   }
 
   /* ── MODAL ── */
-  .modal-wrap {
+  .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    background: rgba(0,0,0,0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 200;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s;
+    transition: opacity var(--transition);
     padding: 24px;
   }
-  .modal-wrap.open { opacity: 1; pointer-events: auto; }
-
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
   .modal {
     background: #0e1d13;
     border: 1px solid var(--border-hover);
-    padding: 48px 40px 40px;
-    max-width: 480px;
+    padding: 52px 44px 44px;
+    max-width: 500px;
     width: 100%;
     position: relative;
-    transform: translateY(10px);
-    transition: transform 0.3s;
+    transform: translateY(12px);
+    transition: transform var(--transition);
   }
-  .modal-wrap.open .modal { transform: translateY(0); }
-
+  .modal-overlay.active .modal { transform: translateY(0); }
   .modal-close {
     position: absolute;
-    top: 16px; right: 20px;
+    top: 18px; right: 22px;
     background: none;
     border: none;
     color: var(--gold);
@@ -530,10 +552,10 @@
     cursor: pointer;
     padding: 8px;
     line-height: 1;
+    transition: color var(--transition);
     font-family: inherit;
   }
   .modal-close:hover { color: var(--warm); }
-
   .modal-glyph {
     font-family: 'Cormorant Garamond', serif;
     font-size: 40px;
@@ -541,44 +563,62 @@
     color: var(--gold);
     margin-bottom: 16px;
     display: block;
-    opacity: 0.8;
+    opacity: 0.75;
   }
-
   .modal h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 300;
-    letter-spacing: 0.02em;
     color: var(--warm);
     margin-bottom: 16px;
     text-transform: none;
+    letter-spacing: 0.01em;
   }
   .modal p {
     font-size: 13px;
-    line-height: 1.85;
+    line-height: 1.9;
     color: var(--muted);
     font-weight: 300;
   }
 
-  @media (max-width: 640px) {
-    .practices-grid { grid-template-columns: repeat(2,1fr); }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .section { padding: 60px 16px; min-height: auto; }
+    .practices-grid { grid-template-columns: repeat(2, 1fr); }
     .practice-card:nth-child(4n) { border-right: 1px solid var(--border); }
     .practice-card:nth-child(2n) { border-right: none; }
+    .practice-card:nth-last-child(-n+4) { border-bottom: 1px solid var(--border); }
+    .practice-card:nth-last-child(-n+2) { border-bottom: none; }
     .results-grid { grid-template-columns: 1fr; }
     .result-item { border-right: none; border-bottom: 1px solid var(--border); }
     .result-item:last-child { border-bottom: none; }
-    .hero-title-main, .hero-title-shadow { font-size: 64px; }
     .price-row { padding: 16px 20px; }
+    .modal { padding: 36px 24px 28px; }
+  }
+  @media (max-width: 420px) {
+    .contact-links { flex-direction: column; }
+    .contact-link { border-right: none; border-bottom: 1px solid var(--border); }
+    .contact-link:last-child { border-bottom: none; }
   }
 </style>
+</head>
+<body>
 
-<!-- HERO -->
-<div class="hero">
-  <div style="position:relative; z-index:2; text-align:center;">
-    <div class="overline">25–26 апреля · Лес</div>
+<!-- ЗАМЕНИТЕ forest-bg.mp4 на путь к вашему видео -->
+<video class="bg-video" id="bgVideo" autoplay loop muted playsinline>
+  <source src="forest-bg.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay"></div>
 
-    <div class="hero-title" style="display:block; margin-bottom:32px;">
-      <div class="hero-title-shadow" aria-hidden="true">24 часа<br>тишины</div>
+<button class="sound-toggle" id="soundToggle" title="Включить звук">🔇</button>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="screen1">
+  <div>
+    <span class="overline">25–26 апреля · Лес</span>
+
+    <div class="hero-title-wrap">
+      <div class="hero-title-shadow" aria-hidden="true">24 часа&#10;тишины</div>
       <div class="hero-title-main">24 <em>часа</em><br>тишины</div>
     </div>
 
@@ -590,149 +630,201 @@
     </p>
 
     <div class="hero-price">20 985 ₽</div>
-    <div class="hero-price-sub">1 час ≈ 511 ₽ · 33 часа осмысленной практики</div>
+    <p class="hero-price-sub">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
 
-    <a href="#price" class="btn"><span>Забронировать место</span></a>
-    <div class="tagline">Биохакинг · Омоложение · Долголетие · Здоровье</div>
+    <a href="#screen3" class="btn"><span>Забронировать место</span></a>
+    <p class="tagline">Биохакинг · Омоложение · Долголетие · Здоровье</p>
   </div>
-</div>
+</section>
 
 <div class="hr"></div>
 
-<!-- PRACTICES -->
-<div class="section">
-  <div class="section-eyebrow">Программа</div>
-  <h2 class="section-heading">Вы проходите 20+ практик<br>за <em>33 часа</em></h2>
-  <p class="section-note">Каждая встроена в систему</p>
-  <div class="practices-grid" id="practicesGrid"></div>
-</div>
-
-<div class="hr"></div>
-
-<!-- RESULTS -->
-<div class="results-section">
-  <div class="section-eyebrow">Результат</div>
-  <h2 class="section-heading">Вы уедете с тихой головой<br>и <em>ясным движением</em> вперёд</h2>
-  <div class="results-grid">
-    <div class="result-item">
-      <span class="result-num">∅</span>
-      <span class="result-label">Тихая голова</span>
-      <p class="result-desc">Без фонового шума<br>и тревоги</p>
-    </div>
-    <div class="result-item">
-      <span class="result-num">⌘</span>
-      <span class="result-label">Собранность</span>
-      <p class="result-desc">Ощущение внутренней<br>опоры</p>
-    </div>
-    <div class="result-item">
-      <span class="result-num">→</span>
-      <span class="result-label">Ясное движение</span>
-      <p class="result-desc">Понимание куда дальше —<br>без суеты</p>
-    </div>
+<!-- ═══ PRACTICES ═══ -->
+<section class="section" id="screen2">
+  <div class="container">
+    <div class="section-eyebrow">Программа</div>
+    <h2 class="section-heading">Вы проходите 20+ практик<br>за <em>33 часа</em></h2>
+    <p class="section-note">Каждая встроена в систему</p>
+    <div class="practices-grid" id="practicesGrid"></div>
   </div>
-
-  <p style="font-size:13px; color:var(--muted); font-weight:300; line-height:1.85; margin-bottom:20px;">
-    Вы забираете инструменты саморегуляции,<br>которые встраиваются в обычную жизнь.<br>Не остаются на ретрите.
-  </p>
-  <button class="btn" onclick="openModal('knowledge')" style="padding:12px 36px; font-size:10px; letter-spacing:0.2em;">
-    <span>Какие знания вы получите →</span>
-  </button>
-</div>
+</section>
 
 <div class="hr"></div>
 
-<!-- PRICE -->
-<div class="price-section" id="price">
-  <div class="section-eyebrow">Стоимость</div>
-  <h2 class="section-heading">Инвестиция<br>в <em>тишину</em></h2>
+<!-- ═══ RESULTS + PRICE ═══ -->
+<section class="section" id="screen3">
+  <div class="container container-narrow" style="text-align:center;">
+    <div class="section-eyebrow">Результат</div>
+    <h2 class="section-heading">Вы уедете с тихой головой<br>и <em>ясным движением</em> вперёд</h2>
 
-  <div class="price-rows">
-    <div class="price-row featured-row">
-      <div class="price-row-label">
-        При оплате сейчас
-        <small>Лучшая цена</small>
+    <div class="results-grid">
+      <div class="result-item">
+        <span class="result-num">∅</span>
+        <span class="result-label">Тихая голова</span>
+        <p class="result-desc">Без фонового шума<br>и тревоги</p>
       </div>
-      <div class="price-row-val featured">20 985 ₽</div>
-    </div>
-    <div class="price-row">
-      <div class="price-row-label">
-        За 7 дней до заезда
-        <small>Стандарт</small>
+      <div class="result-item">
+        <span class="result-num">⌘</span>
+        <span class="result-label">Собранность</span>
+        <p class="result-desc">Ощущение внутренней<br>опоры</p>
       </div>
-      <div class="price-row-val">22 985 ₽</div>
-    </div>
-    <div class="price-row">
-      <div class="price-row-label">
-        В день заезда
-        <small>Последний момент</small>
+      <div class="result-item">
+        <span class="result-num">→</span>
+        <span class="result-label">Ясное движение</span>
+        <p class="result-desc">Понимание куда дальше —<br>без суеты</p>
       </div>
-      <div class="price-row-val">24 985 ₽</div>
     </div>
+
+    <p style="font-size:13px; color:var(--muted); font-weight:300; line-height:1.9; margin-bottom:20px;">
+      Вы забираете инструменты саморегуляции,<br>
+      которые встраиваются в обычную жизнь.<br>
+      Не остаются на ретрите.
+    </p>
+    <button class="btn btn-ghost" onclick="openModal('knowledge')">
+      <span>Какие знания вы получите →</span>
+    </button>
+
+    <div class="hr" style="margin: 52px 0;"></div>
+
+    <div class="section-eyebrow">Стоимость</div>
+    <h2 class="section-heading">Инвестиция<br>в <em>тишину</em></h2>
+
+    <div class="price-rows">
+      <div class="price-row featured">
+        <div class="price-row-label">
+          При оплате сейчас
+          <small>Лучшая цена</small>
+        </div>
+        <div class="price-row-val featured">20 985 ₽</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-label">
+          За 7 дней до заезда
+          <small>Стандарт</small>
+        </div>
+        <div class="price-row-val">22 985 ₽</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-label">
+          В день заезда
+          <small>Последний момент</small>
+        </div>
+        <div class="price-row-val">24 985 ₽</div>
+      </div>
+    </div>
+
+    <p class="price-per-hour">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
+
+    <!-- ЗАМЕНИТЕ ссылку на свой Telegram -->
+    <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" class="btn" style="padding:18px 56px; font-size:11px; letter-spacing:0.22em;">
+      <span>Забронировать место</span>
+    </a>
+    <p style="margin-top:16px; font-size:13px; color:var(--muted);">+7 962 566 82 55</p>
+
+    <div class="contact-links" style="max-width:520px; margin:28px auto 0;">
+      <!-- ЗАМЕНИТЕ ссылки на свои -->
+      <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" class="contact-link">Telegram</a>
+      <a href="https://vk.com/yourvk" target="_blank" rel="noopener" class="contact-link">VK</a>
+      <a href="https://instagram.com/yourinstagram" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+      <a href="https://wa.me/79625668255" target="_blank" rel="noopener" class="contact-link">WhatsApp</a>
+    </div>
+    <p class="footer-mantra">Биохакинг всем · Омоложение · Долголетие · Здоровье</p>
   </div>
+</section>
 
-  <p class="price-per-hour">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
-
-  <a href="https://t.me/yourtelegram" class="btn btn-large" style="padding:18px 56px; font-size:11px;">
-    <span>Забронировать место</span>
-  </a>
-</div>
-
-<div class="hr"></div>
-
-<!-- CONTACTS -->
-<div class="contacts-section">
-  <div class="section-eyebrow">Связаться</div>
-  <p class="phone">+7 962 566 82 55</p>
-  <div class="contact-links">
-    <a href="https://t.me/yourtelegram" class="contact-link">Telegram</a>
-    <a href="https://vk.com/yourvk" class="contact-link">VK</a>
-    <a href="https://instagram.com/yourinstagram" class="contact-link">Instagram</a>
-    <a href="https://wa.me/79625668255" class="contact-link">WhatsApp</a>
-  </div>
-  <p class="footer-mantra">Биохакинг всем · Омоложение · Долголетие · Здоровье</p>
-</div>
-
-<!-- MODAL -->
-<div class="modal-wrap" id="modalWrap" onclick="handleOverlayClick(event)">
+<!-- ═══ MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <span class="modal-glyph" id="mGlyph"></span>
-    <h3 id="mTitle"></h3>
-    <p id="mText"></p>
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <span class="modal-glyph" id="modalGlyph"></span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
   </div>
 </div>
 
 <script>
-const practices = [
-  { id:'silence', g:'∅', name:'Осознанное молчание', title:'Осознанное молчание', text:'24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.' },
-  { id:'detox', g:'⊘', name:'Цифровой детокс', title:'Цифровой детокс', text:'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.' },
-  { id:'breath', g:'↺', name:'Дыхательные нейропрактики', title:'Дыхательные нейропрактики', text:'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.' },
-  { id:'yoga', g:'△', name:'Йога и работа с зажимами', title:'Йога и работа с зажимами', text:'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без правильных форм.' },
-  { id:'food', g:'◇', name:'Осознанное питание', title:'Осознанное питание', text:'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Конкретные принципы питания для мозга и энергии — без догм и диет.' },
-  { id:'banya', g:'☽', name:'Баня как практика', title:'Баня как практика восстановления', text:'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.' },
-  { id:'med', g:'○', name:'Медитации', title:'Медитации для нервной системы', text:'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на духовные переживания. Вы получаете аудиозаписи для самостоятельной практики дома.' },
-  { id:'voice', g:'→', name:'Выход из тишины', title:'Выход из тишины и проявленность', text:'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.' }
-];
-const knowledgeData = { id:'knowledge', g:'∞', title:'Знания, которые вы забираете', text:'• Основы биохакинга нервной системы\n• Как стресс влияет на психику и тело\n• Дыхательные техники быстрой стабилизации\n• Влияние питания на мозг и энергию\n• Методики саморегуляции\n• Инструменты для фокуса и устойчивости\n\nЭто прикладные знания, которые встраиваются в обычную жизнь, а не остаются на ретрите.' };
+  // ── Данные практик ──
+  const practices = [
+    { id:'silence', g:'∅', name:'Осознанное молчание', title:'Осознанное молчание', text:'24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.' },
+    { id:'detox', g:'⊘', name:'Цифровой детокс', title:'Цифровой детокс', text:'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.' },
+    { id:'breath', g:'↺', name:'Дыхательные нейропрактики', title:'Дыхательные нейропрактики', text:'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима «бей или беги» в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.' },
+    { id:'yoga', g:'△', name:'Йога и работа с зажимами', title:'Йога и работа с зажимами', text:'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без «правильных» форм.' },
+    { id:'food', g:'◇', name:'Осознанное питание', title:'Осознанное питание', text:'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Мы даём конкретные принципы питания для мозга и энергии — без догм и диет.' },
+    { id:'banya', g:'☽', name:'Баня как практика', title:'Баня как практика восстановления', text:'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.' },
+    { id:'med', g:'○', name:'Медитации', title:'Медитации для нервной системы', text:'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на «духовные переживания». Вы получаете аудиозаписи для самостоятельной практики дома.' },
+    { id:'voice', g:'→', name:'Выход из тишины', title:'Выход из тишины и проявленность', text:'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.' }
+  ];
 
-const grid = document.getElementById('practicesGrid');
-practices.forEach((p, i) => {
-  const c = document.createElement('div');
-  c.className = 'practice-card';
-  c.onclick = () => openModal(p.id);
-  c.innerHTML = `<span class="practice-num">0${i+1}</span><span class="practice-glyph">${p.g}</span><span class="practice-name">${p.name}</span><span class="practice-hint">Подробнее</span>`;
-  grid.appendChild(c);
-});
+  const knowledgeData = {
+    id:'knowledge', g:'∞',
+    title:'Знания, которые вы забираете',
+    text:'• Основы биохакинга нервной системы\n• Как стресс влияет на психику и тело\n• Дыхательные техники быстрой стабилизации\n• Влияние питания на мозг и энергию\n• Методики саморегуляции\n• Инструменты для фокуса и устойчивости\n\nЭто прикладные знания, которые встраиваются в обычную жизнь, а не остаются на ретрите.'
+  };
 
-function openModal(id) {
-  const d = id === 'knowledge' ? knowledgeData : practices.find(p => p.id === id);
-  if (!d) return;
-  document.getElementById('mGlyph').textContent = d.g;
-  document.getElementById('mTitle').textContent = d.title;
-  document.getElementById('mText').innerHTML = d.text.replace(/\n/g,'<br>');
-  document.getElementById('modalWrap').classList.add('open');
-}
-function closeModal() { document.getElementById('modalWrap').classList.remove('open'); }
-function handleOverlayClick(e) { if (e.target === document.getElementById('modalWrap')) closeModal(); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  // Генерация сетки
+  const grid = document.getElementById('practicesGrid');
+  practices.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'practice-card';
+    card.onclick = () => openModal(p.id);
+    card.innerHTML = `
+      <span class="practice-num">0${i+1}</span>
+      <span class="practice-glyph">${p.g}</span>
+      <span class="practice-name">${p.name}</span>
+      <span class="practice-hint">Подробнее</span>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Модалки
+  function getModalData(id) {
+    if (id === 'knowledge') return knowledgeData;
+    return practices.find(p => p.id === id);
+  }
+  function openModal(id) {
+    const d = getModalData(id);
+    if (!d) return;
+    document.getElementById('modalGlyph').textContent = d.g;
+    document.getElementById('modalTitle').textContent = d.title;
+    document.getElementById('modalText').innerHTML = d.text.replace(/\n/g, '<br>');
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModalDirect() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+  // Плавный скролл
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Звук видео
+  const video = document.getElementById('bgVideo');
+  const soundBtn = document.getElementById('soundToggle');
+  let muted = true;
+  soundBtn.addEventListener('click', () => {
+    if (muted) {
+      video.muted = false;
+      video.volume = 0.55;
+      soundBtn.textContent = '🔊';
+      soundBtn.title = 'Выключить звук';
+      video.play().catch(() => {});
+    } else {
+      video.muted = true;
+      soundBtn.textContent = '🔇';
+      soundBtn.title = 'Включить звук';
+    }
+    muted = !muted;
+  });
 </script>
+</body>
+</html>
