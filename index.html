@@ -1,830 +1,471 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>24 часа тишины в лесу — Перезагрузка нервной системы</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0C1810;
-    --bg2: #111f16;
-    --gold: #C8923A;
-    --gold-lt: #E2B060;
-    --gold-dim: rgba(200,146,58,0.12);
-    --warm: #F0EAE0;
-    --muted: #A89D8E;
-    --dim: rgba(240,234,224,0.06);
-    --border: rgba(200,146,58,0.22);
-    --border-hover: rgba(200,146,58,0.55);
-    --transition: 0.38s cubic-bezier(0.4,0,0.2,1);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Артель №1 — Продукты как в премиальных сетях. Цена — честная.</title>
+    <meta name="description" content="Коллективные закупки продуктов в 2–3 раза выгоднее магазинов. Заказ в понедельник — получение в пятницу.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Артель №1 — Продукты как в премиальных сетях">
+    <meta property="og:description" content="Коллективные закупки продуктов. Вступление — 100 ₽.">
+    <meta property="og:locale" content="ru_RU">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #5C5C5C;
+            --text-muted: #999999;
+            --accent: #3D6B57;
+            --accent-light: #E8F2ED;
+            --border: #EBEBE5;
+            --border-light: #F0F0EB;
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --shadow-card: 0 2px 12px rgba(0,0,0,0.04);
+            --shadow-btn: 0 8px 24px rgba(61,107,87,0.18);
+            --transition: all 0.3s ease;
+        }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.01em;
+        }
 
-  body {
-    background: var(--bg);
-    color: var(--warm);
-    font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-  }
+        .container {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-  /* ── BACKGROUND VIDEO ── */
-  .bg-video {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 0;
-    filter: brightness(0.35) saturate(0.5);
-    pointer-events: none;
-  }
-  .bg-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(180deg,
-      rgba(12,24,16,0.55) 0%,
-      rgba(12,24,16,0.65) 50%,
-      rgba(12,24,16,0.82) 100%);
-    pointer-events: none;
-  }
+        /* Типографика */
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+        h1 {
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 1.18;
+            letter-spacing: -0.6px;
+            color: var(--text);
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.22;
+            letter-spacing: -0.4px;
+            color: var(--text);
+        }
+        .accent { color: var(--accent); }
+        .strikethrough { text-decoration: line-through; color: var(--text-muted); margin-right: 6px; }
 
-  /* ── SOUND TOGGLE ── */
-  .sound-toggle {
-    position: fixed;
-    bottom: 28px; right: 28px;
-    z-index: 100;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: rgba(12,24,16,0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: var(--gold);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition);
-  }
-  .sound-toggle:hover {
-    border-color: var(--gold);
-    background: rgba(12,24,16,0.9);
-  }
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 17px 26px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #FFF;
+            box-shadow: var(--shadow-btn);
+        }
+        .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            font-weight: 500;
+        }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 24px;
-    position: relative;
-    z-index: 5;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(40,72,48,0.3) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
-  }
+        /* Секции */
+        section { padding: 40px 0; }
 
-  .overline {
-    font-size: 10px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 32px;
-    font-weight: 500;
-    opacity: 0.9;
-    display: block;
-  }
+        /* Карточки */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-card);
+        }
 
-  /* layered heading */
-  .hero-title-wrap {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 32px;
-    line-height: 0.9;
-  }
-  .hero-title-shadow {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(72px, 13vw, 118px);
-    font-weight: 300;
-    letter-spacing: -0.03em;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(200,146,58,0.15);
-    position: absolute;
-    top: 4px; left: 4px;
-    pointer-events: none;
-    user-select: none;
-    white-space: pre-line;
-  }
-  .hero-title-main {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(72px, 13vw, 118px);
-    font-weight: 300;
-    letter-spacing: -0.03em;
-    color: var(--warm);
-    position: relative;
-    white-space: pre-line;
-  }
-  .hero-title-main em { font-style: italic; color: var(--gold-lt); }
+        /* Hero */
+        .hero {
+            padding: 30px 0 40px;
+            text-align: center;
+        }
+        .hero-brands {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+        .brand-tag {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
+        .brand-tag.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-light);
+            font-weight: 600;
+        }
 
-  .deco-line {
-    width: 40px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 0 auto 32px;
-  }
+        /* Сравнение цен */
+        .price-compare {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 18px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+        }
+        .price-old {
+            font-size: 18px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-weight: 500;
+        }
+        .price-arrow { font-size: 20px; color: var(--accent); }
+        .price-new {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .price-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
 
-  .hero-sub {
-    font-size: clamp(13px, 1.8vw, 16px);
-    color: var(--muted);
-    font-weight: 300;
-    letter-spacing: 0.04em;
-    margin-bottom: 44px;
-    line-height: 1.85;
-  }
+        /* Медиа */
+        .media-frame {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            margin: 20px 0;
+        }
+        .media-frame img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        .media-placeholder {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F5F5F0;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-align: center;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border);
+        }
 
-  .hero-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 34px;
-    font-weight: 300;
-    color: var(--gold-lt);
-    letter-spacing: 0.02em;
-    margin-bottom: 6px;
-  }
-  .hero-price-sub {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 40px;
-  }
+        /* Как это работает */
+        .step-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .step-row:last-child { border-bottom: none; }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
 
-  /* ── BUTTONS ── */
-  .btn {
-    display: inline-block;
-    padding: 16px 52px;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    background: transparent;
-    cursor: pointer;
-    transition: all var(--transition);
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gold);
-    transform: translateX(-101%);
-    transition: transform var(--transition);
-  }
-  .btn span { position: relative; z-index: 1; transition: color var(--transition); }
-  .btn:hover::before { transform: translateX(0); }
-  .btn:hover span { color: #0C1810; }
-  .btn:hover { color: #0C1810; }
-  .btn:active { transform: scale(0.97); }
+        /* Цитата */
+        blockquote {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent);
+            padding-left: 18px;
+            margin: 20px 0;
+            font-style: italic;
+            line-height: 1.5;
+        }
 
-  .btn-ghost {
-    border-color: transparent;
-    color: var(--muted);
-    padding: 10px 24px;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-  }
-  .btn-ghost:hover { color: var(--gold-lt); background: transparent; border-color: transparent; }
-  .btn-ghost::before { display: none; }
+        /* Форма */
+        .capture-box {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px 22px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin: 30px 0;
+        }
+        .input-field {
+            width: 100%;
+            padding: 15px 18px;
+            margin: 6px 0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            color: var(--text);
+        }
+        .input-field:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+        .input-field::placeholder { color: var(--text-muted); }
 
-  .tagline {
-    margin-top: 24px;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    color: rgba(168,157,142,0.4);
-    text-transform: uppercase;
-  }
-
-  /* ── SECTIONS ── */
-  .section {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 5;
-    padding: 80px 24px;
-  }
-  .container {
-    max-width: 960px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  .container-narrow { max-width: 700px; }
-
-  .section-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  .section-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 300;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    text-align: center;
-    color: var(--warm);
-    margin-bottom: 12px;
-  }
-  .section-heading em { font-style: italic; color: var(--gold-lt); }
-  .section-note {
-    text-align: center;
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    margin-bottom: 52px;
-  }
-
-  /* ── PRACTICES GRID ── */
-  .practices-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-  }
-  .practice-card {
-    padding: 32px 20px 28px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: all 0.4s;
-    text-align: center;
-    position: relative;
-    background: transparent;
-    min-height: 172px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-  }
-  .practice-card:nth-child(4n) { border-right: none; }
-  .practice-card:nth-last-child(-n+4) { border-bottom: none; }
-  .practice-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(40,72,48,0.5), transparent);
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-  .practice-card:hover::before { opacity: 1; }
-  .practice-card:hover { background: rgba(200,146,58,0.04); }
-
-  .practice-num {
-    position: absolute;
-    top: 12px; left: 14px;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: rgba(200,146,58,0.28);
-    font-weight: 500;
-    transition: color 0.3s;
-  }
-  .practice-card:hover .practice-num { color: rgba(200,146,58,0.6); }
-
-  .practice-glyph {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 30px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--gold);
-    opacity: 0.65;
-    line-height: 1;
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .practice-card:hover .practice-glyph { opacity: 1; transform: scale(1.1); }
-
-  .practice-name {
-    font-size: 11px;
-    letter-spacing: 0.07em;
-    color: var(--muted);
-    font-weight: 400;
-    line-height: 1.5;
-    transition: color 0.3s;
-    position: relative;
-  }
-  .practice-card:hover .practice-name { color: var(--warm); }
-
-  .practice-hint {
-    font-size: 8px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: transparent;
-    transition: color 0.3s;
-    position: absolute;
-    bottom: 12px;
-  }
-  .practice-card:hover .practice-hint { color: rgba(200,146,58,0.5); }
-
-  /* ── DIVIDER ── */
-  .hr {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-    position: relative;
-    z-index: 5;
-  }
-
-  /* ── RESULTS ── */
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    margin: 52px 0;
-  }
-  .result-item {
-    padding: 44px 28px;
-    border-right: 1px solid var(--border);
-    position: relative;
-    text-align: left;
-  }
-  .result-item:last-child { border-right: none; }
-  .result-item::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 1px; height: 32px;
-    background: linear-gradient(180deg, var(--gold), transparent);
-    opacity: 0.45;
-  }
-  .result-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 300;
-    color: var(--gold-lt);
-    line-height: 1;
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-    display: block;
-  }
-  .result-label {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .result-desc {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.8;
-  }
-
-  /* ── PRICE ── */
-  .price-rows {
-    border: 1px solid var(--border);
-    margin: 44px 0;
-  }
-  .price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 32px;
-    border-bottom: 1px solid var(--border);
-    transition: background var(--transition);
-    position: relative;
-  }
-  .price-row:last-child { border-bottom: none; }
-  .price-row:hover { background: var(--gold-dim); }
-  .price-row.featured { background: rgba(200,146,58,0.07); }
-  .price-row.featured::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 50%;
-    transform: translateY(-50%);
-    width: 3px; height: 55%;
-    background: var(--gold);
-  }
-  .price-row-label {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-    letter-spacing: 0.03em;
-  }
-  .price-row-label small {
-    display: block;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(168,157,142,0.45);
-    margin-top: 4px;
-  }
-  .price-row-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    color: var(--warm);
-    letter-spacing: -0.01em;
-  }
-  .price-row-val.featured { color: var(--gold-lt); font-size: 32px; }
-
-  .price-per-hour {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 36px;
-    opacity: 0.75;
-  }
-
-  /* ── CONTACTS ── */
-  .contact-links {
-    display: flex;
-    border: 1px solid var(--border);
-    max-width: 520px;
-    margin: 28px auto 0;
-    overflow: hidden;
-    flex-wrap: wrap;
-  }
-  .contact-link {
-    flex: 1;
-    min-width: 100px;
-    padding: 16px 12px;
-    text-decoration: none;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-right: 1px solid var(--border);
-    transition: all var(--transition);
-    font-weight: 400;
-    text-align: center;
-  }
-  .contact-link:last-child { border-right: none; }
-  .contact-link:hover {
-    background: var(--gold-dim);
-    color: var(--gold-lt);
-  }
-
-  .phone {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 300;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    margin-top: 24px;
-  }
-
-  .footer-mantra {
-    margin-top: 52px;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: rgba(168,157,142,0.22);
-    text-transform: uppercase;
-  }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgba(0,0,0,0.78);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--transition);
-    padding: 24px;
-  }
-  .modal-overlay.active { opacity: 1; pointer-events: auto; }
-  .modal {
-    background: #0e1d13;
-    border: 1px solid var(--border-hover);
-    padding: 52px 44px 44px;
-    max-width: 500px;
-    width: 100%;
-    position: relative;
-    transform: translateY(12px);
-    transition: transform var(--transition);
-  }
-  .modal-overlay.active .modal { transform: translateY(0); }
-  .modal-close {
-    position: absolute;
-    top: 18px; right: 22px;
-    background: none;
-    border: none;
-    color: var(--gold);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 8px;
-    line-height: 1;
-    transition: color var(--transition);
-    font-family: inherit;
-  }
-  .modal-close:hover { color: var(--warm); }
-  .modal-glyph {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
-    font-style: italic;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: block;
-    opacity: 0.75;
-  }
-  .modal h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 300;
-    color: var(--warm);
-    margin-bottom: 16px;
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-  .modal p {
-    font-size: 13px;
-    line-height: 1.9;
-    color: var(--muted);
-    font-weight: 300;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .section { padding: 60px 16px; min-height: auto; }
-    .practices-grid { grid-template-columns: repeat(2, 1fr); }
-    .practice-card:nth-child(4n) { border-right: 1px solid var(--border); }
-    .practice-card:nth-child(2n) { border-right: none; }
-    .practice-card:nth-last-child(-n+4) { border-bottom: 1px solid var(--border); }
-    .practice-card:nth-last-child(-n+2) { border-bottom: none; }
-    .results-grid { grid-template-columns: 1fr; }
-    .result-item { border-right: none; border-bottom: 1px solid var(--border); }
-    .result-item:last-child { border-bottom: none; }
-    .price-row { padding: 16px 20px; }
-    .modal { padding: 36px 24px 28px; }
-  }
-  @media (max-width: 420px) {
-    .contact-links { flex-direction: column; }
-    .contact-link { border-right: none; border-bottom: 1px solid var(--border); }
-    .contact-link:last-child { border-bottom: none; }
-  }
-</style>
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .footer-logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- ЗАМЕНИТЕ forest-bg.mp4 на путь к вашему видео -->
-<video class="bg-video" id="bgVideo" autoplay loop muted playsinline>
-  <source src="forest-bg.mp4" type="video/mp4">
-</video>
-<div class="bg-overlay"></div>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+        <div class="container">
+            <p class="geo-badge geo-badge--neutral" data-geo="city-prep">для жителей Казани</p>
+            <p class="eyebrow">• Потребительский кооператив •</p>
+            <h1>
+                Те же продукты,<br>что в <span class="accent">Перекрёстке</span><br>и <span class="accent">ВкусВилле</span>
+            </h1>
+            <p style="font-size: 16px; color: var(--text-secondary); margin-top: 12px; font-weight: 500;">
+                Только дешевле. Потому что мы убрали лишние звенья и огромные торговые залы.
+            </p>
 
-<button class="sound-toggle" id="soundToggle" title="Включить звук">🔇</button>
+            <!-- Теги брендов для узнавания -->
+            <div class="hero-brands">
+                <span class="brand-tag active">ВкусВилл</span>
+                <span class="brand-tag active">Перекрёсток</span>
+                <span class="brand-tag active">Самокат</span>
+                <span class="brand-tag">и другие</span>
+            </div>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero" id="screen1">
-  <div>
-    <span class="overline">25–26 апреля · Лес</span>
+            <!-- Визуальное сравнение цены -->
+            <div class="price-compare">
+                <div style="text-align: center;">
+                    <p class="price-old">2 800 ₽</p>
+                    <p class="price-label">Обычный магазин</p>
+                </div>
+                <span class="price-arrow">→</span>
+                <div style="text-align: center;">
+                    <p class="price-new">1 150 ₽</p>
+                    <p class="price-label">Ваша цена в Артели</p>
+                </div>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted);">*Средний чек набора продуктов на неделю для семьи из 3 человек</p>
 
-    <div class="hero-title-wrap">
-      <div class="hero-title-shadow" aria-hidden="true">24 часа&#10;тишины</div>
-      <div class="hero-title-main">24 <em>часа</em><br>тишины</div>
-    </div>
+            <!-- Фото продуктов -->
+            <div class="media-frame">
+                <img src="https://i.ibb.co/N6nG2QG/premium-food.jpg" alt="Продукты высокого качества" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'media-placeholder\'>📷 Фото: те же продукты, что в премиум-сетях<br><span style=\'font-size:11px; color:#999;\'>крупный план, хороший свет</span></div>';">
+            </div>
 
-    <div class="deco-line"></div>
-
-    <p class="hero-sub">
-      Перезагрузка нервной системы<br>
-      33 часа · 20+ практик · Камерная группа · Дом в лесу
-    </p>
-
-    <div class="hero-price">20 985 ₽</div>
-    <p class="hero-price-sub">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
-
-    <a href="#screen3" class="btn"><span>Забронировать место</span></a>
-    <p class="tagline">Биохакинг · Омоложение · Долголетие · Здоровье</p>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ═══ PRACTICES ═══ -->
-<section class="section" id="screen2">
-  <div class="container">
-    <div class="section-eyebrow">Программа</div>
-    <h2 class="section-heading">Вы проходите 20+ практик<br>за <em>33 часа</em></h2>
-    <p class="section-note">Каждая встроена в систему</p>
-    <div class="practices-grid" id="practicesGrid"></div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ═══ RESULTS + PRICE ═══ -->
-<section class="section" id="screen3">
-  <div class="container container-narrow" style="text-align:center;">
-    <div class="section-eyebrow">Результат</div>
-    <h2 class="section-heading">Вы уедете с тихой головой<br>и <em>ясным движением</em> вперёд</h2>
-
-    <div class="results-grid">
-      <div class="result-item">
-        <span class="result-num">∅</span>
-        <span class="result-label">Тихая голова</span>
-        <p class="result-desc">Без фонового шума<br>и тревоги</p>
-      </div>
-      <div class="result-item">
-        <span class="result-num">⌘</span>
-        <span class="result-label">Собранность</span>
-        <p class="result-desc">Ощущение внутренней<br>опоры</p>
-      </div>
-      <div class="result-item">
-        <span class="result-num">→</span>
-        <span class="result-label">Ясное движение</span>
-        <p class="result-desc">Понимание куда дальше —<br>без суеты</p>
-      </div>
-    </div>
-
-    <p style="font-size:13px; color:var(--muted); font-weight:300; line-height:1.9; margin-bottom:20px;">
-      Вы забираете инструменты саморегуляции,<br>
-      которые встраиваются в обычную жизнь.<br>
-      Не остаются на ретрите.
-    </p>
-    <button class="btn btn-ghost" onclick="openModal('knowledge')">
-      <span>Какие знания вы получите →</span>
-    </button>
-
-    <div class="hr" style="margin: 52px 0;"></div>
-
-    <div class="section-eyebrow">Стоимость</div>
-    <h2 class="section-heading">Инвестиция<br>в <em>тишину</em></h2>
-
-    <div class="price-rows">
-      <div class="price-row featured">
-        <div class="price-row-label">
-          При оплате сейчас
-          <small>Лучшая цена</small>
+            <a href="#join" class="btn btn-primary">Узнать, как получать такие же продукты дешевле</a>
+            <p style="margin-top: 12px; font-size: 13px; color: var(--text-muted);">Вступительный взнос — 100 ₽. Единоразово.</p>
         </div>
-        <div class="price-row-val featured">20 985 ₽</div>
-      </div>
-      <div class="price-row">
-        <div class="price-row-label">
-          За 7 дней до заезда
-          <small>Стандарт</small>
+    </section>
+
+    <!-- ============ ПОЧЕМУ ТАКАЯ ЦЕНА ============ -->
+    <section style="padding-top: 10px;">
+        <div class="container">
+            <p class="eyebrow">• Механика честной цены •</p>
+            <h2>Куда исчезает <span class="accent">наценка 300%</span></h2>
+
+            <div style="margin: 24px 0;">
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 20px;">🏭</span>
+                    <p style="font-weight: 500;">Производитель</p>
+                </div>
+                <div style="height: 2px; background: #ddd; width: 2px; height: 20px; margin-left: 9px;"></div>
+                <p style="color: var(--text-muted); font-size: 14px; margin-left: 30px; margin-bottom: 8px;">→ Посредник 1 (дистрибьютор)</p>
+                <p style="color: var(--text-muted); text-decoration: line-through; font-size: 14px; margin-left: 30px; margin-bottom: 8px;">→ Посредник 2 (логистика сети)</p>
+                <p style="color: var(--text-muted); text-decoration: line-through; font-size: 14px; margin-left: 30px; margin-bottom: 8px;">→ Аренда торг. зала, мерчандайзинг</p>
+                <p style="color: var(--text-muted); text-decoration: line-through; font-size: 14px; margin-left: 30px; margin-bottom: 8px;">→ Маркетинг, кассиры, списания</p>
+                <div style="height: 2px; background: #ddd; width: 2px; height: 20px; margin-left: 9px;"></div>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 20px;">📍</span>
+                    <p style="font-weight: 700; color: var(--accent);">Ваш пункт выдачи. Цена x2, а не x5.</p>
+                </div>
+            </div>
+
+            <blockquote>
+                «Мы не экономим на качестве. Мы экономим на том, без чего продукт не становится хуже: на аренде зала в 1000 м² и зарплате двадцати кассиров».
+            </blockquote>
+            <p style="font-size: 13px; color: var(--text-muted);">— Принцип закупок ПК «Артель №1»</p>
         </div>
-        <div class="price-row-val">22 985 ₽</div>
-      </div>
-      <div class="price-row">
-        <div class="price-row-label">
-          В день заезда
-          <small>Последний момент</small>
+    </section>
+
+    <!-- ============ КАК ЭТО РАБОТАЕТ ============ -->
+    <section>
+        <div class="container">
+            <p class="eyebrow">• Процесс •</p>
+            <h2>Как это <span class="accent">работает</span></h2>
+
+            <div class="step-row">
+                <div class="step-num">1</div>
+                <div>
+                    <p style="font-weight: 600;">Вступаете в кооператив</p>
+                    <p style="font-size: 14px; color: var(--text-secondary);">100₽ единоразово. Это ваш ключ к коллективным закупкам. Никаких подписок.</p>
+                </div>
+            </div>
+            <div class="step-row">
+                <div class="step-num">2</div>
+                <div>
+                    <p style="font-weight: 600;">Формируете заказ в понедельник</p>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Выбираете из того же ассортимента, что поставляется в премиальные сети. Предоплаты нет.</p>
+                </div>
+            </div>
+            <div class="step-row">
+                <div class="step-num">3</div>
+                <div>
+                    <p style="font-weight: 600;">Забираете в пятницу, платите наличными</p>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Осматриваете товар. Платите только за то, что одобрили. Доставка по городу — 300₽.</p>
+                </div>
+            </div>
         </div>
-        <div class="price-row-val">24 985 ₽</div>
-      </div>
-    </div>
+    </section>
 
-    <p class="price-per-hour">1 час ≈ 511 ₽ · 33 часа осмысленной практики</p>
+    <!-- ============ ГАРАНТИИ ============ -->
+    <section>
+        <div class="container">
+            <div class="card" style="padding: 28px;">
+                <p class="eyebrow" style="margin-bottom: 4px;">• Чистые условия •</p>
+                <h3 style="font-weight: 700; font-size: 20px; margin-bottom: 16px;">Никаких компромиссов с качеством</h3>
+                <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+                    <span>✅</span>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Товар с дефектом просто не забираете. Платите только за идеальное.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+                    <span>✅</span>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Скрытый брак — фото и чек менеджеру. Деньги на карте в тот же день.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <span>✅</span>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Деятельность защищена ФЗ №3085-1 «О потребительской кооперации».</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ЗАМЕНИТЕ ссылку на свой Telegram -->
-    <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" class="btn" style="padding:18px 56px; font-size:11px; letter-spacing:0.22em;">
-      <span>Забронировать место</span>
-    </a>
-    <p style="margin-top:16px; font-size:13px; color:var(--muted);">+7 962 566 82 55</p>
+    <!-- ============ ОТЗЫВЫ ============ -->
+    <section>
+        <div class="container">
+            <p class="eyebrow">• Пайщики •</p>
+            <h2>Люди, которые <span class="accent">уже</span> с нами</h2>
 
-    <div class="contact-links" style="max-width:520px; margin:28px auto 0;">
-      <!-- ЗАМЕНИТЕ ссылки на свои -->
-      <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" class="contact-link">Telegram</a>
-      <a href="https://vk.com/yourvk" target="_blank" rel="noopener" class="contact-link">VK</a>
-      <a href="https://instagram.com/yourinstagram" target="_blank" rel="noopener" class="contact-link">Instagram</a>
-      <a href="https://wa.me/79625668255" target="_blank" rel="noopener" class="contact-link">WhatsApp</a>
-    </div>
-    <p class="footer-mantra">Биохакинг всем · Омоложение · Долголетие · Здоровье</p>
-  </div>
-</section>
+            <div class="card">
+                <p style="font-size: 15px; color: var(--text-secondary); font-style: italic; margin-bottom: 14px;">«Беру тут то же самое, что покупала во ВкусВилле. Молоко, курица, зелень, сыры. Только теперь недельный чек — 3200 вместо 7500. И это не скидки, это их реальная цена».</p>
+                <p style="font-weight: 600; font-size: 14px;">Елена Д.</p>
+                <p style="font-size: 12px; color: var(--text-muted);">Казань, пайщик с марта 2024</p>
+            </div>
 
-<!-- ═══ MODAL ═══ -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    <span class="modal-glyph" id="modalGlyph"></span>
-    <h3 id="modalTitle"></h3>
-    <p id="modalText"></p>
-  </div>
-</div>
+            <div class="card">
+                <p style="font-size: 15px; color: var(--text-secondary); font-style: italic; margin-bottom: 14px;">«Честно, первые 2 недели присматривался. Думал, будет что-то второсортное. Оказалось — обычные бренды, которые везде. Только без дикой наценки. Теперь глупо покупать в магазине».</p>
+                <p style="font-weight: 600; font-size: 14px;">Руслан А.</p>
+                <p style="font-size: 12px; color: var(--text-muted);">Нижний Новгород, пайщик с января 2024</p>
+            </div>
 
-<script>
-  // ── Данные практик ──
-  const practices = [
-    { id:'silence', g:'∅', name:'Осознанное молчание', title:'Осознанное молчание', text:'24 часа без речи и внешней коммуникации. Мозг перестаёт тратить энергию на обработку социальных сигналов. Начинается глубокая переработка накопленного шума. Сначала — сопротивление. Через несколько часов — ясность и тишина внутри.' },
-    { id:'detox', g:'⊘', name:'Цифровой детокс', title:'Цифровой детокс', text:'Полное отключение от телефонов, уведомлений и информационного потока. Нервная система выходит из режима постоянного сканирования угроз. Уже через 8–12 часов снижается уровень кортизола, возвращается способность к глубокому вниманию.' },
-    { id:'breath', g:'↺', name:'Дыхательные нейропрактики', title:'Дыхательные нейропрактики', text:'Техники дыхания, напрямую влияющие на тонус блуждающего нерва. Быстрое переключение из симпатического режима «бей или беги» в парасимпатический режим восстановления. Вы забираете работающие протоколы для самостоятельного применения.' },
-    { id:'yoga', g:'△', name:'Йога и работа с зажимами', title:'Йога и работа с зажимами', text:'Мягкая практика, направленная на высвобождение хронических телесных блоков. Челюсть, диафрагма, плечевой пояс. Через тело снимается то, что психика держит годами. Без насилия, без «правильных» форм.' },
-    { id:'food', g:'◇', name:'Осознанное питание', title:'Осознанное питание', text:'Еда становится частью практики, а не фоновым процессом. Вы замечаете вкус, насыщение, связь между пищей и состоянием ума. Мы даём конкретные принципы питания для мозга и энергии — без догм и диет.' },
-    { id:'banya', g:'☽', name:'Баня как практика', title:'Баня как практика восстановления', text:'Не развлечение, а глубокая восстановительная практика. Чередование температур тренирует сосудистую систему, снимает мышечное напряжение, запускает выработку эндорфинов. Тело отпускает контроль.' },
-    { id:'med', g:'○', name:'Медитации', title:'Медитации для нервной системы', text:'Короткие, точно выстроенные медитации, направленные на регуляцию нервной системы, а не на «духовные переживания». Вы получаете аудиозаписи для самостоятельной практики дома.' },
-    { id:'voice', g:'→', name:'Выход из тишины', title:'Выход из тишины и проявленность', text:'Осознанный переход от внутренней тишины к внешней речи. Практика, которая учит говорить из собранного состояния, а не из привычной реактивности. Слова обретают вес.' }
-  ];
+            <!-- Место под скриншот отзыва -->
+            <div class="media-placeholder" style="height: 160px; margin-top: 8px;">
+                📱 Скриншот реального диалога с благодарностью
+            </div>
+        </div>
+    </section>
 
-  const knowledgeData = {
-    id:'knowledge', g:'∞',
-    title:'Знания, которые вы забираете',
-    text:'• Основы биохакинга нервной системы\n• Как стресс влияет на психику и тело\n• Дыхательные техники быстрой стабилизации\n• Влияние питания на мозг и энергию\n• Методики саморегуляции\n• Инструменты для фокуса и устойчивости\n\nЭто прикладные знания, которые встраиваются в обычную жизнь, а не остаются на ретрите.'
-  };
+    <!-- ============ ЗАХВАТ ============ -->
+    <section id="join">
+        <div class="container">
+            <div class="capture-box">
+                <p class="eyebrow" style="text-align: center;">• Присоединиться •</p>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">Попробуйте один заказ</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                    Оставьте контакт — пришлём ссылку на закрытый канал с ассортиментом этой недели и короткую инструкцию.
+                </p>
+                <form class="lead-form" data-stage="neutral" method="post">
+                    <input type="text" class="input-field" name="name" placeholder="Ваше имя" required>
+                    <input type="text" class="input-field" name="contact" placeholder="Telegram-логин или телефон" required>
+                    <button type="submit" class="btn btn-primary" data-label="Получить доступ к закупкам" style="margin-top: 10px;">Получить доступ к закупкам</button>
+                </form>
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: 14px;">Никакого спама. Только еженедельный ассортимент.</p>
+            </div>
+        </div>
+    </section>
 
-  // Генерация сетки
-  const grid = document.getElementById('practicesGrid');
-  practices.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'practice-card';
-    card.onclick = () => openModal(p.id);
-    card.innerHTML = `
-      <span class="practice-num">0${i+1}</span>
-      <span class="practice-glyph">${p.g}</span>
-      <span class="practice-name">${p.name}</span>
-      <span class="practice-hint">Подробнее</span>
-    `;
-    grid.appendChild(card);
-  });
+    <!-- ============ ФУТЕР ============ -->
+    <footer>
+        <div class="container">
+            <p class="footer-logo">АРТЕЛЬ №1</p>
+            <p style="margin-top: 6px;">Потребительский кооператив коллективных закупок</p>
+            <p style="margin-top: 2px;">Казань • Самара • Н.Новгород • Пенза • Тольятти • Ульяновск • Саранск • Чебоксары</p>
+            <p style="margin-top: 10px; font-size: 11px;">© 2024 ПК «Артель №1». Федеральный закон №3085-1.</p>
+        </div>
+    </footer>
 
-  // Модалки
-  function getModalData(id) {
-    if (id === 'knowledge') return knowledgeData;
-    return practices.find(p => p.id === id);
-  }
-  function openModal(id) {
-    const d = getModalData(id);
-    if (!d) return;
-    document.getElementById('modalGlyph').textContent = d.g;
-    document.getElementById('modalTitle').textContent = d.title;
-    document.getElementById('modalText').innerHTML = d.text.replace(/\n/g, '<br>');
-    document.getElementById('modalOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModalDirect() {
-    document.getElementById('modalOverlay').classList.remove('active');
-    document.body.style.overflow = '';
-  }
-  function closeModal(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
-
-  // Плавный скролл
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function(e) {
-      const t = document.querySelector(this.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-    });
-  });
-
-  // Звук видео
-  const video = document.getElementById('bgVideo');
-  const soundBtn = document.getElementById('soundToggle');
-  let muted = true;
-  soundBtn.addEventListener('click', () => {
-    if (muted) {
-      video.muted = false;
-      video.volume = 0.55;
-      soundBtn.textContent = '🔊';
-      soundBtn.title = 'Выключить звук';
-      video.play().catch(() => {});
-    } else {
-      video.muted = true;
-      soundBtn.textContent = '🔇';
-      soundBtn.title = 'Включить звук';
-    }
-    muted = !muted;
-  });
-</script>
+    <script src="/assets/js/env.js"></script>
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/forms.js"></script>
 </body>
 </html>
