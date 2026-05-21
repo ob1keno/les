@@ -892,6 +892,32 @@
     text-transform: uppercase;
   }
 
+  .footer-studio-wrap {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(200,146,58,0.12);
+  }
+  .footer-studio-label {
+    font-size: 8px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(168,157,142,0.28);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .footer-studio {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(168,157,142,0.45);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color var(--transition);
+  }
+  .footer-studio:hover { color: var(--gold-lt); }
+  .footer-studio em { font-style: normal; color: rgba(200,146,58,0.55); }
+
   .hr {
     width: 100%;
     height: 1px;
@@ -971,9 +997,6 @@
     .hero-price-sub { letter-spacing: 0.14em; }
     .manifesto { padding: 48px 16px; }
     .partner-box { padding: 32px 20px; margin-top: 36px; }
-    .bg-video { display: none; }
-    .bg-fallback { display: block; }
-    .sound-toggle { display: none; }
     .modal-overlay,
     .photo-modal-overlay { backdrop-filter: none; -webkit-backdrop-filter: none; }
     .cards-4 { grid-template-columns: repeat(2, 1fr); }
@@ -1349,6 +1372,14 @@
       <a href="https://wa.me/79625668255" target="_blank" rel="noopener" class="contact-link">WhatsApp</a>
     </div>
     <p class="footer-mantra">Биохакинг всем · Омоложение · Долголетие · Здоровье</p>
+
+    <div class="footer-studio-wrap">
+      <span class="footer-studio-label">Сайт сделан</span>
+      <!-- Замените href на URL вашей визитки -->
+      <a href="https://kollektivny-razum.github.io" target="_blank" rel="noopener" class="footer-studio">
+        Студия <em>Коллективный Разум</em>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1514,9 +1545,10 @@
   const soundBtn = document.getElementById('soundToggle');
   let muted = true;
 
-  if (window.matchMedia('(max-width: 768px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     video.pause();
     video.removeAttribute('autoplay');
+    document.querySelector('.bg-fallback').style.display = 'block';
   } else {
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) video.pause();
